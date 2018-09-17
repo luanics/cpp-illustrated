@@ -1,0 +1,29 @@
+#pragma once
+
+#include <string>
+
+namespace luanics::testing::core {
+
+class Filter;
+class Reporter;
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+///
+/// @class Component
+///
+/// @brief Base class for components (nodes) in a test hierarchy.
+///
+/// `Component` in the `Composite` design pattern.
+///
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+class Component {
+public:
+	virtual ~Component() = default;
+
+	virtual std::string const & name() const = 0;
+	virtual void run(Reporter & reporter) = 0;
+};
+
+} // namespace luanics::testing::core

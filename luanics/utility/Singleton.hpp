@@ -1,0 +1,32 @@
+#pragma once
+
+namespace luanics {
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+///
+/// @class Singleton
+///
+/// @brief Simple, non-CRTP singleton factory.
+///
+/// @tparam T must be default-constructible.
+///
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+template <class T>
+class Singleton {
+public:
+	Singleton(Singleton const &) = delete;
+	Singleton & operator=(Singleton const &) = delete;
+
+	static T & instance() {
+		static T _instance;
+		return _instance;
+	}
+
+protected:
+	Singleton() = default;
+	~Singleton() = default;
+};
+
+}
