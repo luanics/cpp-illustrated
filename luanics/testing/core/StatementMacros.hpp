@@ -23,7 +23,7 @@
 //*********************************************************
 
 #define LUANICS_PRINT(expression) \
-	LUANICS_REPORTER.report(luanics::testing::Log{__FILE__, __LINE__, #expression " = " + luanics::strings::toString((expression))});
+	LUANICS_REPORTER.report(luanics::testing::core::Log{__FILE__, __LINE__, #expression " = " + luanics::string::toString((expression))});
 
 #define LUANICS_EXPECT_EQ_EXPRESSION(expectedString, actualString)\
 	expectedString "==" actualString

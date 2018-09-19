@@ -8,7 +8,7 @@ std::underlying_type_t<Level> toUnderlyingType(Level const & level) {
 }
 
 Level & operator++(Level & level) {
-	LUANICS_PRECONDITION(toUnderlyingType(level) < toUnderlyingType(Level::SECTION));
+	LUANICS_PRECONDITION(toUnderlyingType(level) < toUnderlyingType(Level::TEST));
 	level = static_cast<Level>(toUnderlyingType(level) + 1);
 	return level;
 }

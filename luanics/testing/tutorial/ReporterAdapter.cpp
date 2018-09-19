@@ -21,7 +21,7 @@ bool ReporterAdapter::doStartReportOn(core::Component const & component) {
 		case Level::PART: return _adapted->startPart(component.name());
 		case Level::CHAPTER: return _adapted->startChapter(component.name());
 		case Level::SECTION: return _adapted->startSection(component.name());
-		default: return true;
+		default: LUANICS_NEVER_REACHED(toUnderlyingType(level())); return false;
 	}
 }
 
@@ -31,6 +31,7 @@ void ReporterAdapter::doFinishReportOn(core::Component const & component, core::
 		case Level::PART: _adapted->finishPart(component.name(), outcome); break;
 		case Level::CHAPTER: _adapted->finishChapter(component.name(), outcome); break;
 		case Level::SECTION: _adapted->finishSection(component.name(), outcome); break;
+		default: LUANICS_NEVER_REACHED(toUnderlyingType(level()));
 	}
 }
 

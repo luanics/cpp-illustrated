@@ -39,4 +39,4 @@ endif(CMAKE_BUILD_TYPE STREQUAL Debug)
 include_directories(.)
 
 add_subdirectory(luanics)
-#add_subdirectory(tutorial)
+add_subdirectory(tutorial)

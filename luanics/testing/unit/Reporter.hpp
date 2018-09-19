@@ -7,9 +7,9 @@
 namespace luanics::testing {
 
 namespace core {
-class Error;
-class Log;
-class Result;
+	class Error;
+	class Log;
+	class Result;
 }
 
 namespace unit {
@@ -20,6 +20,8 @@ namespace unit {
 /// @class Reporter
 ///
 /// @brief Reporter tailored to the structure of unit tests.
+///
+/// Follows approach similar to Builder design pattern.
 ///
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////

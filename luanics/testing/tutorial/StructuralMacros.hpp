@@ -19,6 +19,26 @@
 #include "luanics/testing/tutorial/ComponentInstaller.hpp"
 #include "luanics/testing/tutorial/CompositeReference.hpp"
 
+#define LUANICS_ADD_TUTORIAL(tutorialName) \
+	luanics::testing::core::Composite tutorial{#tutorialName};
+
+#define LUANICS_ADD_PART(partName, isEnabled) \
+	luanics::testing::core::Composite part##partName{#partName}; \
+	luanics::testing::core::Installer part##partName##Installer{&tutorial, &part##partName}; \
+
+#define LUANICS_ADD_CHAPTER(partName, chapterName, isEnabled) \
+	extern luanics::testing::core::Composite luanics##Chapter##chapterName##Instance; \
+	luanics::testing::core::Installer chapter##chapterName##Installer{&part##partName, &luanics##Chapter##chapterName##Instance};
+
+#define LUANICS_TEST_SET_INSTANCE_EXTERNAL(name) luanicsTestSetInstance##name
+
+#define LUANICS_ADD_PROJECT(partName, projectNameSpace, projectName, isEnabled) \
+	namespace luanics { \
+	namespace projectNameSpace { \
+	extern luanics::testing::core::Composite LUANICS_TEST_SET_INSTANCE_EXTERNAL(projectName); \
+	luanics::testing::core::Installer project##projectName##Installer{&part##partName, &LUANICS_TEST_SET_INSTANCE_EXTERNAL(projectName)}; \
+	} }
+
 #define LUANICS_CHAPTER_INSTANCE(name) luanics##Chapter##name##Instance
 
 #define LUANICS_BEGIN_CHAPTER(name)\

@@ -18,7 +18,7 @@ public:
 	virtual ~Matcher() {}
 
 	/// @returns true if matches
-	virtual bool operator()(std::string const & target) const = 0;
+	virtual bool operator()(std::string const & candidate) const = 0;
 }; // class Matcher
 
 } // namespace luanics::string

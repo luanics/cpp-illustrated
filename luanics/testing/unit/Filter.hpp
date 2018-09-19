@@ -22,7 +22,7 @@ namespace testing::unit {
 class Filter : public Reporter {
 public:
 	Filter(
-		std::unique_ptr<string::Matcher> caseMatcher,
+		std::unique_ptr<string::Matcher> testSetMatcher,
 		std::unique_ptr<string::Matcher> testMatcher,
 		Reporter * filtered
 	);
@@ -41,7 +41,7 @@ public:
 	virtual void report(core::Result const & result) override final;
 
 private:
-	std::unique_ptr<string::Matcher> _caseMatcher;
+	std::unique_ptr<string::Matcher> _testSetMatcher;
 	std::unique_ptr<string::Matcher> _testMatcher;
 	Reporter * _filtered;
 }; // class Filter

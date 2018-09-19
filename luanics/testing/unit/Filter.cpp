@@ -4,11 +4,11 @@
 namespace luanics::testing::unit {
 
 Filter::Filter(
-	std::unique_ptr<luanics::string::Matcher> caseMatcher,
+	std::unique_ptr<luanics::string::Matcher> testSetMatcher,
 	std::unique_ptr<luanics::string::Matcher> testMatcher,
 	Reporter * filtered
 ) :
-	_caseMatcher{std::move(caseMatcher)},
+	_testSetMatcher{std::move(testSetMatcher)},
 	_testMatcher{std::move(testMatcher)},
 	_filtered{filtered}
 {}
@@ -22,7 +22,7 @@ void Filter::finishTestSuite(core::Outcome const outcome) {
 }
 
 bool Filter::startTestSet(std::string const & name) {
-	if (_caseMatcher->operator()(name)) {
+	if (_testSetMatcher->operator()(name)) {
 		return _filtered->startTestSet(name);
 	}
 	else {

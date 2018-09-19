@@ -12,7 +12,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "luanics/testing/tutorial/AnswerMacros.hpp"
 #include "luanics/testing/tutorial/PlaceholderMacros.hpp"
 #include "luanics/testing/tutorial/StructuralMacros.hpp"
 
@@ -26,11 +25,12 @@
 #define END_SUBPROJECT(name) LUANICS_END_SUBPROJECT(name)
 #define SUBPROJECT_TEST(name) LUANICS_SUBPROJECT_TEST(name)
 
+#define ADD_TUTORIAL(name) LUANICS_ADD_TUTORIAL(name)
+#define ADD_PART(name, isEnabled) LUANICS_ADD_PART(name, isEnabled)
+#define ADD_CHAPTER(partName, name, isEnabled) LUANICS_ADD_CHAPTER(partName, name, isEnabled)
+#define ADD_PROJECT(partName, projectSpaceName, projectName, isEnabled) LUANICS_ADD_PROJECT(partName, projectSpaceName, projectName, isEnabled)
+
 #define FIX(x) LUANICS_FIX(x)
 #define CREATE LUANICS_CREATE
-
-#define ANSWER(...) LUANICS_ANSWER(__VA_ARGS__)
-#define RIGHT(x) LUANICS_RIGHT(x)
-#define WRONG(x) LUANICS_WRONG(x)
 
 #endif

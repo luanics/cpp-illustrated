@@ -2,6 +2,9 @@
 # Library
 #*******************************************************************
 
+list(APPEND LuanicsLibSources crypto/Ciphers.cpp)
+list(APPEND LuanicsLibSources crypto/Vigenere.cpp)
+
 list(APPEND LuanicsLibSources logging/Level.cpp)
 list(APPEND LuanicsLibSources logging/Logger.cpp)
 list(APPEND LuanicsLibSources logging/SimpleSink.cpp)
@@ -22,6 +25,7 @@ list(APPEND LuanicsLibSources testing/unit/ReporterAdapter.cpp)
 list(APPEND LuanicsLibSources testing/unit/StandardReporter.cpp)
 
 list(APPEND LuanicsLibSources string/Conversion.cpp)
+list(APPEND LuanicsLibSources string/EnumeratedMatcher.cpp)
 list(APPEND LuanicsLibSources string/ExactMatcher.cpp)
 
 list(APPEND LuanicsLibSources utility/Paths.cpp)
@@ -38,11 +42,15 @@ list(APPEND LuanicsTestSources logging/test/SimpleSinkTest.cpp)
 list(APPEND LuanicsTestSources logging/test/SimpleSourceTest.cpp)
 list(APPEND LuanicsTestSources logging/test/TupleRecordTest.cpp)
 
+list(APPEND LuanicsTestSources math/test/OperationsTest.cpp)
+
 list(APPEND LuanicsTestSources testing/core/test/OutcomeTest.cpp)
 list(APPEND LuanicsTestSources testing/core/test/CoreTest.cpp)
 list(APPEND LuanicsTestSources testing/tutorial/test/ReporterAdapterTest.cpp)
+list(APPEND LuanicsTestSources testing/unit/test/FilterTest.cpp)
 
 list(APPEND LuanicsTestSources string/test/AllMatcherTest.cpp)
+list(APPEND LuanicsTestSources string/test/EnumeratedMatcherTest.cpp)
 list(APPEND LuanicsTestSources string/test/ExactMatcherTest.cpp)
 list(APPEND LuanicsTestSources string/test/ManipulationTest.cpp)
 
