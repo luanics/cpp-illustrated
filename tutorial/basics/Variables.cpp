@@ -4,16 +4,24 @@
 
 BEGIN_CHAPTER(Variables)
 
-// * A variable is name + object
-// * A variable declaration is as follows:
-//     <type> <identifier> <initializer>_opt;
-// * An object is an instance of a type
-// * A variable is either an "object variable" or a "reference variable".
+// * A variable is a place to store information along with a name used to retrieve the information.
+// * The information is called the value and the place it is stored is an object.
+// * Type determines the values a variable can take and how it can be manipulated.
+// * A variable definition has a type, an identifier, and an optional initializer.
+// * A variable is either an object variable or a reference variable.
+// * Reference variables are aliases.
 // * Use the "const" keyword to prevent a variable from being modified.
 // * Use the "auto" keyword for type inference.
+// * There are several forms of initialization.
+//   * Leaving out the initializer is a form of initialiation --- default initialization.
+//   * An initializer with = is copy initialization (not assignment),
+//     without is direct initialization.
+//   * An initializer with braces is list initialization,
+//     without is no-list initialization.
 
 SECTION(Basics) {
-	// A variable declaration has a type, identifier, and an optional initializer.
+	// * A variable definition has a type, an identifier, and an optional initializer.
+
 	// Add initializers to the following variable declarations to pass.
 	int wrong FIX();
 	int right = 10;
@@ -25,8 +33,10 @@ SECTION(Basics) {
 	std::string const hiAndBye = hi + "and" + bye;
 	EXPECT_EQ("hi and bye", hiAndBye);
 
+	// * Reference variables are aliases.
+
 	// The variables above are object variables. Adding "&" makes a reference
-	//  variable.
+	//  variable, so that it "refers" to another variable, like an alias.
 	int a = 10;
 	int & b = a;
 	b = 20;
@@ -34,12 +44,14 @@ SECTION(Basics) {
 
 	// Make "y" a reference variable that refers to "x":
 	int x = 1;
-	int FIX(y);
+	FIX(int y);
 	y = 2;
 	EXPECT_EQ(2, x);
 }
 
 SECTION(Constness) {
+	// * Use the "const" keyword to prevent a variable from being modified.
+
 	// const variables are set to the appropriate value at initialization, and
 	//   cannot be changed after that.
 	int const one = 1;
@@ -66,7 +78,7 @@ SECTION(Constness) {
 }
 
 SECTION(TypeDeduction) {
-	// Type deduction can be achieved with the "auto" keyword.
+	// * Use the "auto" keyword for type inference.
 
 	// Replace the explicit type specification with type deduction:
 	FIX(std::string) name = "Scooby";
@@ -74,6 +86,8 @@ SECTION(TypeDeduction) {
 }
 
 SECTION(Initialization) {
+	// * There are several forms of initialization.
+
 	// Use "value initialization" to set zero to 0
 	int const zero{FIX(0)};
 	EXPECT_EQ(0, zero);

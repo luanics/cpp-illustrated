@@ -156,7 +156,7 @@ void StandardReporter::composeLine(core::Log const & log) {
 }
 
 void StandardReporter::composeLine(core::Result const & result) {
-	composeIndentation(_level);
+	composeIndentation(incremented(_level));
 	_line << (result.isPass ? _passIntro : _failIntro);
 	_line << " ";
 	composeFileLineIdentifier(result.fileName, result.line);

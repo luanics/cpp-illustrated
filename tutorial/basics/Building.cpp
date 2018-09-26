@@ -4,56 +4,23 @@
 
 BEGIN_CHAPTER(Building)
 
-SECTION(Macros) {
-#define LEVEL FIX(3)
-	EXPECT_EQ(LEVEL, 4)
-#undef LEVEL // cleanup
-}
+// * A build refers to one complete iteration of the build process.
+// * The main stages of the build process are preprocessor, compiler, assembler and linker.
+// * Pitfall - people often use "compiling" to mean "building", and "compiler" to mean "build system".
+// * Source code is typically divided up into header files (.hpp) for the interface, and source files (.cpp) for the implementation
+// * The preprocessor produces a translation unit from a source file by inserting all "included" headers into the source file.
+//   Include guards are used to prevent multiple insertion of the same file.
+// * Build management tools coordinate the build, providing an easier build experience for the user. We use the CMake build management tools.
 
-SECTION(ConditionalCompilation) {
-// Use a preprocessor directive to define the macro LOVE
-CREATE
-
-#ifdef LOVE
-	EXPECT_REACHED();
-#else
-	EXPECT_NOT_REACHED();
-#endif
-
-// Now use a preprocessor directive to "cleanup" and undefine LOVE
-CREATE
-
-#ifndef LOVE
-	EXPECT_REACHED();
-#else
-	EXPECT_NOT_REACHED();
-#endif
-}
-
-SECTION(BrokenCode) {
-// Sometimes we use conditional compilation to "turn off" code with errors
-//  until you are ready to work on it.
-//	When you are ready, uncomment the line "#define IS_ACTIVE" to begin.
-//#define IS_ACTIVE
-#ifdef IS_ACTIVE
-	EXPECT_REACHED();
-#endif
-	EXPECT_NOT_REACHED();
-#undef IS_ACTIVE
-}
-
-SECTION(IncludeFiles) {
-// Uncomment to begin...
-//#define IS_ACTIVE
-#ifdef IS_ACTIVE
-// Uncomment the correct line to win the grand prize...
+#include "data/CommentMeOutToPlay.hpp"
 //#include "data/DoorA.hpp"
 //#include "data/DoorB.hpp"
 //#include "data/DoorC.hpp"
-	EXPECT_EQ("new car", prize())
-#endif
-	EXPECT_NOT_REACHED();
-#undef IS_ACTIVE
+
+SECTION(IncludeFiles) {
+	// * The preprocessor produces a translation unit from a source file by inserting all "included" headers into the source file.
+	// Uncomment the correct line above to win the grand prize...
+	EXPECT_EQ("new car", prize());
 }
 
 END_CHAPTER(Building)

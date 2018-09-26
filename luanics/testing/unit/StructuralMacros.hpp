@@ -18,7 +18,7 @@
 #include "luanics/testing/core/Reporter.hpp"
 #include "luanics/testing/unit/Instance.hpp"
 
-#define LUANICS_DOUBLE_ERROR 1e-6
+#define LUANICS_DOUBLE_COMPARISON_PRECISION 1e-6
 
 #define LUANICS_TEST_SET_INSTANCE luanicsTestSetInstance
 #define LUANICS_TEST_SET_INSTALLER_INSTANCE luanicsTestSetInstallerInstance

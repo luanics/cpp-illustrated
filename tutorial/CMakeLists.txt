@@ -4,6 +4,8 @@ list(APPEND LuanicsTutorialSources basics/GettingStarted.cpp)
 list(APPEND LuanicsTutorialSources basics/Statements.cpp)
 list(APPEND LuanicsTutorialSources basics/Variables.cpp)
 list(APPEND LuanicsTutorialSources basics/Building.cpp)
+list(APPEND LuanicsTutorialSources basics/Directives.cpp)
+list(APPEND LuanicsTutorialSources basics/Projects.cpp)
 
 list(APPEND LuanicsTutorialSources more_basics/ArithmeticTypes.cpp)
 list(APPEND LuanicsTutorialSources more_basics/ControlFlow.cpp)

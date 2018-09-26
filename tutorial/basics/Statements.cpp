@@ -12,16 +12,19 @@ using namespace std;
 
 BEGIN_CHAPTER(Statements)
 
-// * Programs are composed of a sequence of commands, called statements.
+// * Statements are commands for the computer.
+// * C++ programs are composed of a sequence of statements.
 // * Statements are executed (no value), expressions are evaluated (value).
 // * Most, but not all, statements end with a semicolon.
-// * There are roughly five categories of statements:
-//    + expression statement -  an expression followed by a semicolon
-//	  + declaration statement - introduces a name and associates it with an entity
-//    + compound statement - a group of statements in curly braces
-//    + control flow statement - redirects flow of execution
-//    + try-block statement -  used for exception handling
-// * The one-definition rule (ODR) says that an entity may have multiple declarations, but only one definition.
+// * All whitespace is treated equally, and consecutive whitespaces are effectively collapsed.
+// * There are roughly five categories of statement:
+//   * expression statement is an expression followed by a semicolon
+//   * declaration statement introduces a name and associates it with an entity
+//   * compound statement is a group of statements in curly braces
+//   * control flow statements redirect the flow of execution, e.g., for-statement and if-statement
+//   * try-block statement is used for exception handling
+// * The one-definition rule (ODR) says that an entity may have multiple declarations, but only one definition per translation unit.
+// * Don't confuse initialization (using '='), assignment (using '='), and equality comparison (using '==').
 
 SECTION(DeclarationStatements) {
 	// Here we define and initialize two variables.

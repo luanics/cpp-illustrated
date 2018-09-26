@@ -19,6 +19,12 @@
 #include <cmath>
 
 //*********************************************************
+// Definitions
+//*********************************************************
+
+#define LUANICS_DOUBLE_COMPARISON_PRECISION 1e-6
+
+//*********************************************************
 // Messages
 //*********************************************************
 
@@ -121,7 +127,7 @@
 #define LUANICS_EXPECT_NEAR_BODY(expected, actual) \
 	auto const expectedValue = ((expected)); \
 	auto const actualValue = ((actual)); \
-	bool const isPassing = std::fabs(expectedValue - actualValue) < LUANICS_DOUBLE_ERROR; \
+	bool const isPassing = std::fabs(expectedValue - actualValue) < LUANICS_DOUBLE_COMPARISON_PRECISION; \
 	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_EQ_MESSAGE(#expected, expectedValue, #actual, actualValue)});
 
 #define LUANICS_EXPECT_TRUE_BODY(actual) \
