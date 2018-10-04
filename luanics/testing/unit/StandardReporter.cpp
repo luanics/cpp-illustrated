@@ -1,3 +1,5 @@
+#include "luanics/logging/Contract.hpp"
+#include "luanics/testing/core/Component.hpp"
 #include "luanics/testing/core/Error.hpp"
 #include "luanics/testing/core/Log.hpp"
 #include "luanics/testing/core/Result.hpp"
@@ -55,6 +57,24 @@ StandardReporter::StandardReporter(
 	}
 	else {
 		setupUsingNoColors();
+	}
+}
+
+bool StandardReporter::startReportOn(core::Component const & component, unsigned const depth) {
+	switch (depth) {
+		case Level::TEST_SUITE: return startTestSuite();
+		case Level::TEST_SET: return startTestSet(component.name());
+		case Level::TEST: return startTest(component.name());
+		default: LUANICS_UNREACHABLE(depth); return false;
+	}
+}
+
+void StandardReporter::finishReportOn(core::Component const & component, unsigned const depth, core::Outcome const outcome) {
+	switch (depth) {
+		case Level::TEST_SUITE: finishTestSuite(outcome); break;
+		case Level::TEST_SET: finishTestSet(component.name(), outcome); break;
+		case Level::TEST: finishTest(component.name(), outcome); break;
+		default: LUANICS_UNREACHABLE(depth);
 	}
 }
 

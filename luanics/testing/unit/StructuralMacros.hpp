@@ -28,7 +28,7 @@
 	luanics::testing::core::Composite LUANICS_TEST_SET_INSTANCE_EXTERNAL(name){#name};\
 	namespace {\
 		luanics::testing::core::Composite & LUANICS_TEST_SET_INSTANCE = LUANICS_TEST_SET_INSTANCE_EXTERNAL(name);\
-		luanics::testing::core::Installer LUANICS_TEST_SET_INSTALLER_INSTANCE{&luanics::testing::unit::suiteInstance, &LUANICS_TEST_SET_INSTANCE};\
+		luanics::testing::core::Installer LUANICS_TEST_SET_INSTALLER_INSTANCE{luanics::testing::unit::suiteInstance(), LUANICS_TEST_SET_INSTANCE};\
 
 #define LUANICS_END_TEST_SET()\
 	}
@@ -45,5 +45,5 @@
 		virtual void doRun(luanics::testing::core::Reporter &) override final;\
 	}\
 	LUANICS_TEST_INSTANCE(name);\
-	luanics::testing::core::Installer LUANICS_TEST_INSTALLER_INSTANCE(name){&LUANICS_TEST_SET_INSTANCE, &LUANICS_TEST_INSTANCE(name)};\
+	luanics::testing::core::Installer LUANICS_TEST_INSTALLER_INSTANCE(name){LUANICS_TEST_SET_INSTANCE, LUANICS_TEST_INSTANCE(name)};\
 	void LUANICS_TEST_CLASS(name)::doRun(luanics::testing::core::Reporter & LUANICS_REPORTER)

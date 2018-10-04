@@ -1,3 +1,10 @@
 #include "luanics/testing/unit/Instance.hpp"
 
-luanics::testing::core::Composite luanics::testing::unit::suiteInstance{"Suite"};
+namespace luanics::testing::unit {
+
+core::Composite & suiteInstance() {
+	static core::Composite instance{"Suite"};
+	return instance;
+}
+
+} // namespace luanics::testing::core

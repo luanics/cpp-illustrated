@@ -1,9 +1,10 @@
 #pragma once
 
-#include "luanics/testing/unit/Reporter.hpp"
+#include "luanics/testing/core/AugmentedReporter.hpp"
 #include "luanics/utility/Timer.hpp"
 
 #include <chrono>
+#include <iostream>
 #include <vector>
 
 namespace luanics::testing::unit {
@@ -17,28 +18,42 @@ namespace luanics::testing::unit {
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-class StandardReporter : public Reporter {
+class StandardReporter : public core::AugmentedReporter {
 public:
+	enum Level {
+		TEST_SUITE = 0,
+		TEST_SET = 1,
+		TEST = 2
+	};
+
 	StandardReporter(
 		std::ostream * out,
 		bool const isUsingColors = true,
 		bool const isTerse = false
 	);
 
-	virtual bool startTestSuite() override final;
-	virtual void finishTestSuite(core::Outcome const outcome) override final;
-
-	virtual bool startTestSet(std::string const & name) override final;
-	virtual void finishTestSet(std::string const & name, core::Outcome const outcome) override final;
-
-	virtual bool startTest(std::string const & name) override final;
-	virtual void finishTest(std::string const & name, core::Outcome const outcome) override final;
+	virtual bool startReportOn(
+		core::Component const & component,
+		unsigned const depth
+	) override final;
+	virtual void finishReportOn(
+		core::Component const & component,
+		unsigned const depth,
+		core::Outcome const outcome
+	) override final;
 
 	virtual void report(core::Error const & error) override final;
 	virtual void report(core::Log const & log) override final;
 	virtual void report(core::Result const & result) override final;
 
 private:
+	bool startTestSuite();
+	void finishTestSuite(core::Outcome const outcome);
+	bool startTestSet(std::string const & name);
+	void finishTestSet(std::string const & name, core::Outcome const outcome);
+	bool startTest(std::string const & name);
+	void finishTest(std::string const & name, core::Outcome const outcome);
+
 	void setupUsingAnsiColors();
 	void setupUsingNoColors();
 

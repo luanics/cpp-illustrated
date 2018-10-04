@@ -1,7 +1,7 @@
+#include "luanics/testing/core/FirstFailFilter.hpp"
+#include "luanics/testing/core/IndentingReporter.hpp"
+#include "luanics/testing/core/ReporterAugmenter.hpp"
 #include "luanics/testing/Tutorial.hpp"
-#include "luanics/testing/tutorial/FirstFailFilter.hpp"
-#include "luanics/testing/tutorial/ReporterAdapter.hpp"
-#include "luanics/testing/tutorial/StandardReporter.hpp"
 
 #include <cstring>
 #include <iostream>
@@ -73,12 +73,12 @@ int main(int argc, char * argv[]) {
 	// Run tutorial
 	//*********************************************************
 
-	luanics::testing::tutorial::StandardReporter unfiltered(&cout, isUsingColor, isShowingHints);
-	luanics::testing::tutorial::FirstFailFilter filtered(&unfiltered);
-	using luanics::testing::tutorial::Reporter;
-	Reporter * reporter = isUsingFirstFail ? static_cast<Reporter*>(&filtered) : static_cast<Reporter*>(&unfiltered);
-	luanics::testing::tutorial::ReporterAdapter adapter(reporter);
-	tutorial.run(adapter);
+	luanics::testing::core::IndentingReporter unfiltered(&cout, isUsingColor, isShowingHints);
+	luanics::testing::core::FirstFailFilter filtered(&unfiltered);
+	using luanics::testing::core::AugmentedReporter;
+	AugmentedReporter * reporter = isUsingFirstFail ? static_cast<AugmentedReporter*>(&filtered) : static_cast<AugmentedReporter*>(&unfiltered);
+	luanics::testing::core::ReporterAugmenter augmenter(reporter);
+	tutorial.run(augmenter);
 
 	return 0;
 }

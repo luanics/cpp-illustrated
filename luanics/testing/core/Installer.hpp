@@ -15,8 +15,8 @@ namespace luanics::testing::core {
 /////////////////////////////////////////////////////////////////////
 class Installer {
 public:
-	Installer(Composite * parent, Component * child) {
-		parent->add(child);
+	Installer(Composite & parent, Component & child) {
+		parent.add(&child);
 	}
 };
 

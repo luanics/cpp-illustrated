@@ -2,12 +2,8 @@
 
 #include "luanics/testing/core/Composite.hpp"
 
-namespace luanics {
-namespace testing {
-namespace unit {
+namespace luanics::testing::unit {
 
-extern core::Composite suiteInstance;
+core::Composite & suiteInstance();
 
-} // namespace unit
-} // namespace testing
-} // namespace luanics
+} // namespace luanics::testing::unit

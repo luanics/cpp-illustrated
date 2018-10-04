@@ -1,8 +1,9 @@
 #include "luanics/logging/Contract.hpp"
+#include "luanics/testing/core/Component.hpp"
 #include "luanics/testing/core/Error.hpp"
+#include "luanics/testing/core/IndentingReporter.hpp"
 #include "luanics/testing/core/Log.hpp"
 #include "luanics/testing/core/Result.hpp"
-#include "luanics/testing/tutorial/StandardReporter.hpp"
 #include "luanics/utility/Ansi.hpp"
 #include "luanics/utility/Paths.hpp"
 #include "luanics/utility/Streams.hpp"
@@ -10,7 +11,7 @@
 #include <algorithm>
 #include <iterator>
 
-namespace luanics::testing::tutorial {
+namespace luanics::testing::core {
 
 namespace {
 
@@ -18,19 +19,15 @@ std::string const INTRO_BEGIN_DELIMITER = "[";
 std::string const INTRO_END_DELIMITER = "]";
 std::string const INDENT = "   ";
 
-Level incremented(Level level) {
-	return ++level;
 }
 
-}
-
-StandardReporter::StandardReporter(
+IndentingReporter::IndentingReporter(
 	std::ostream * out,
 	bool const isUsingColor,
 	bool const isVerbose
 ) :
 	_isVerbose{isVerbose},
-	_level{Level::TUTORIAL},
+	_depth{0},
 	_lines{},
 	_indices{},
 	_line{},
@@ -49,71 +46,37 @@ StandardReporter::StandardReporter(
 	}
 }
 
-bool StandardReporter::startTutorial() {
-	_level = Level::TUTORIAL;
+bool IndentingReporter::startReportOn(Component const & component, unsigned const depth) {
+	_depth = depth;
 	pushLineIndex();
 	return true;
 }
 
-void StandardReporter::finishTutorial(core::Outcome const outcome) {
-	_level = Level::TUTORIAL;
-	composeLine("Tutorial", outcome);
+void IndentingReporter::finishReportOn(Component const & component, unsigned const depth, Outcome const outcome) {
+	_depth = depth;
+	composeLine(component.name(), outcome);
 	storeComposedLineAt(popLineIndex());
-	flushLines();
+	if (depth == 0) {
+		flushLines();
+	}
 }
 
-bool StandardReporter::startPart(std::string const & name) {
-	_level = Level::PART;
-	pushLineIndex();
-	return true;
-}
-
-void StandardReporter::finishPart(std::string const & name, core::Outcome const outcome) {
-	_level = Level::PART;
-	composeLine(name, outcome);
-	storeComposedLineAt(popLineIndex());
-}
-
-bool StandardReporter::startChapter(std::string const & name) {
-	_level = Level::CHAPTER;
-	pushLineIndex();
-	return true;
-}
-
-void StandardReporter::finishChapter(std::string const & name, core::Outcome const outcome) {
-	_level = Level::CHAPTER;
-	composeLine(name, outcome);
-	storeComposedLineAt(popLineIndex());
-}
-
-bool StandardReporter::startSection(std::string const & name) {
-	_level = Level::SECTION;
-	pushLineIndex();
-	return true;
-}
-
-void StandardReporter::finishSection(std::string const & name, core::Outcome const outcome) {
-	_level = Level::SECTION;
-	composeLine(name, outcome);
-	storeComposedLineAt(popLineIndex());
-}
-
-void StandardReporter::report(core::Error const & error) {
+void IndentingReporter::report(core::Error const & error) {
 	composeLine(error);
 	storeComposedLine();
 }
 
-void StandardReporter::report(core::Log const & log) {
+void IndentingReporter::report(core::Log const & log) {
 	composeLine(log);
 	storeComposedLine();
 }
 
-void StandardReporter::report(core::Result const & result) {
+void IndentingReporter::report(core::Result const & result) {
 	composeLine(result);
 	storeComposedLine();
 }
 
-void StandardReporter::setupUsingAnsiColors() {
+void IndentingReporter::setupUsingAnsiColors() {
 	using namespace utility::ansi;
 	_noneIntro = INTRO_BEGIN_DELIMITER + DARK_GRAY + "NONE " + RESET + INTRO_END_DELIMITER;
 	_logIntro = INTRO_BEGIN_DELIMITER + LIGHT_GRAY + "LOG  " + RESET + INTRO_END_DELIMITER;
@@ -122,7 +85,7 @@ void StandardReporter::setupUsingAnsiColors() {
 	_errorIntro = INTRO_BEGIN_DELIMITER + BOLD_RED + "ERROR" + RESET + INTRO_END_DELIMITER;
 }
 
-void StandardReporter::setupUsingNoColors() {
+void IndentingReporter::setupUsingNoColors() {
 	_noneIntro = INTRO_BEGIN_DELIMITER + "NONE " + INTRO_END_DELIMITER;
 	_logIntro = INTRO_BEGIN_DELIMITER + "LOG  " + INTRO_END_DELIMITER;
 	_passIntro = INTRO_BEGIN_DELIMITER + "PASS " + INTRO_END_DELIMITER;
@@ -130,8 +93,8 @@ void StandardReporter::setupUsingNoColors() {
 	_errorIntro = INTRO_BEGIN_DELIMITER + "ERROR" + INTRO_END_DELIMITER;
 }
 
-void StandardReporter::composeLine(std::string const & name, core::Outcome const outcome) {
-	composeIndentation(_level);
+void IndentingReporter::composeLine(std::string const & name, core::Outcome const outcome) {
+	composeIndentation(_depth);
 	switch (outcome) {
 		case core::Outcome::NONE: _line << _noneIntro; break;
 		case core::Outcome::PASS: _line << _passIntro; break;
@@ -141,22 +104,22 @@ void StandardReporter::composeLine(std::string const & name, core::Outcome const
 	_line << " " << name;
 }
 
-void StandardReporter::composeLine(core::Error const & error) {
-	composeIndentation(incremented(_level));
+void IndentingReporter::composeLine(core::Error const & error) {
+	composeIndentation(_depth + 1);
 	_line << _errorIntro;
 	_line << " - " << error.message;
 }
 
-void StandardReporter::composeLine(core::Log const & log) {
-	composeIndentation(incremented(_level));
+void IndentingReporter::composeLine(core::Log const & log) {
+	composeIndentation(_depth + 1);
 	_line << _logIntro;
 	_line << " ";
 	composeFileLineIdentifier(log.fileName, log.line);
 	_line << " - " << log.message;
 }
 
-void StandardReporter::composeLine(core::Result const & result) {
-	composeIndentation(incremented(_level));
+void IndentingReporter::composeLine(core::Result const & result) {
+	composeIndentation(_depth + 1);
 	_line << (result.isPass ? _passIntro : _failIntro);
 	_line << " ";
 	composeFileLineIdentifier(result.fileName, result.line);
@@ -165,32 +128,32 @@ void StandardReporter::composeLine(core::Result const & result) {
 	}
 }
 
-void StandardReporter::composeFileLineIdentifier(char const * const filePath, int const line) {
+void IndentingReporter::composeFileLineIdentifier(char const * const filePath, int const line) {
 	_line << utility::fileNameFrom(filePath) << ":" << line;
 }
 
-void StandardReporter::composeIndentation(Level const level) {
-	for (Level l = Level::TUTORIAL; l < level; ++l) {
+void IndentingReporter::composeIndentation(unsigned const depth) {
+	for (unsigned d{0}; d < depth; ++d) {
 		_line << INDENT;
 	}
 }
 
-void StandardReporter::storeComposedLine() {
+void IndentingReporter::storeComposedLine() {
 	_lines.push_back(_line.str());
 	clearLine();
 }
 
-void StandardReporter::storeComposedLineAt(unsigned const index) {
+void IndentingReporter::storeComposedLineAt(unsigned const index) {
 	_lines[index] = _line.str();
 	clearLine();
 }
 
-void StandardReporter::clearLine() {
+void IndentingReporter::clearLine() {
 	_line.str("");
 	_line.clear();
 }
 
-void StandardReporter::flushLines() {
+void IndentingReporter::flushLines() {
 	std::copy(
 		_lines.begin(),
 		_lines.end(),
@@ -198,15 +161,15 @@ void StandardReporter::flushLines() {
 	);
 }
 
-void StandardReporter::pushLineIndex() {
+void IndentingReporter::pushLineIndex() {
 	_lines.push_back("");
 	_indices.push_back(_lines.size() - 1);
 }
 
-unsigned StandardReporter::popLineIndex() {
+unsigned IndentingReporter::popLineIndex() {
 	auto const result = _indices.back();
 	_indices.pop_back();
 	return result;
 }
 
-} // namespace luanics::testing::tutorial
+} // namespace luanics::testing::core

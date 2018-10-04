@@ -19,13 +19,13 @@
 #define LUANICS_POSTCONDITION(...) LUANICS_POSTCONDITION_IMPL(__VA_ARGS__, "")
 
 #define LUANICS_ERROR(...) LUANICS_ERROR_IMPL(__VA_ARGS__, "")
-#define LUANICS_NEVER_REACHED(...) LUANICS_NEVER_REACHED_IMPL(__VA_ARGS__, "")
+#define LUANICS_UNREACHABLE(...) LUANICS_UNREACHABLE_IMPL(__VA_ARGS__, "")
 
 #define LUANICS_ERROR_IMPL(message, ...) \
 	LUANICS_FATAL(message, __VA_ARGS__) \
 	throw luanics::Error(message);
 
-#define LUANICS_NEVER_REACHED_IMPL(...) \
+#define LUANICS_UNREACHABLE_IMPL(...) \
 	LUANICS_ERROR("Should never reach this line", __VA_ARGS__)
 
 #define LUANICS_ASSERT_IMPL(test, ...) \

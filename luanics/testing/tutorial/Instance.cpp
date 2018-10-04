@@ -1,3 +1,9 @@
+#include "luanics/testing/core/Composite.hpp"
 #include "luanics/testing/tutorial/Instance.hpp"
 
-luanics::testing::core::Composite luanics::testing::tutorial::tutorialInstance{"Tutorial"};
+namespace luanics::testing::tutorial {
+
+core::Composite & tutorialInstance() {
+	static core::Composite result{"Tutorial"};
+	return result;
+}

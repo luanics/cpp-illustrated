@@ -24,7 +24,7 @@ inline std::ostream & operator<<(std::ostream & out, ValueCategory const value) 
 		case ValueCategory::LVALUE: out << "LVALUE"; break;
 		case ValueCategory::XVALUE: out << "XVALUE"; break;
 		case ValueCategory::PRVALUE: out << "PRVALUE"; break;
-		default: NEVER_REACHED(static_cast<int>(value));
+		default: UNREACHABLE(static_cast<int>(value));
 	}
 	return out;
 }

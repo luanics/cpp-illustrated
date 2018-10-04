@@ -1,5 +1,6 @@
-#include "luanics/testing/core/Error.hpp"
 #include "luanics/testing/core/Leaf.hpp"
+
+#include "luanics/testing/core/Error.hpp"
 #include "luanics/testing/core/Reporter.hpp"
 
 #include <iostream>

@@ -11,7 +11,7 @@ TEST(Install) {
 	EXPECT_EQ(0, testSuite.children().size());
 	EXPECT_EQ(0, testCase.children().size());
 
-	Installer testCaseInstaller(&testSuite, &testCase);
+	Installer testCaseInstaller(testSuite, testCase);
 	EXPECT_EQ(1, testSuite.children().size());
 	EXPECT_EQ(0, testCase.children().size());
 }
@@ -28,9 +28,9 @@ private:
 TEST(Pass) {
 	Composite testSuite{"TestSuite"};
 	Composite testCase{"TestCase"};
-	Installer testCaseInstaller(&testSuite, &testCase);
+	Installer testCaseInstaller(testSuite, testCase);
 	PassingTest passingTest;
-	Installer testInstaller(&testCase, &passingTest);
+	Installer testInstaller(testCase, passingTest);
 	EXPECT_EQ(1, testSuite.children().size());
 	EXPECT_EQ(1, testCase.children().size());
 
@@ -54,9 +54,9 @@ private:
 TEST(Fail) {
 	Composite testSuite{"TestSuite"};
 	Composite testCase{"TestCase"};
-	Installer testCaseInstaller{&testSuite, &testCase};
+	Installer testCaseInstaller{testSuite, testCase};
 	FailingTest failingTest;
-	Installer testInstaller{&testCase, &failingTest};
+	Installer testInstaller{testCase, failingTest};
 	EXPECT_EQ(1, testSuite.children().size());
 	EXPECT_EQ(1, testCase.children().size());
 
@@ -80,9 +80,9 @@ private:
 TEST(Error) {
 	Composite testSuite{"TestSuite"};
 	Composite testCase{"TestCase"};
-	Installer testCaseInstaller{&testSuite, &testCase};
+	Installer testCaseInstaller{testSuite, testCase};
 	ErringTest erringTest;
-	Installer testInstaller{&testCase, &erringTest};
+	Installer testInstaller{testCase, erringTest};
 	EXPECT_EQ(1, testSuite.children().size());
 	EXPECT_EQ(1, testCase.children().size());
 
@@ -106,9 +106,9 @@ private:
 TEST(Log) {
 	Composite testSuite{"TestSuite"};
 	Composite testCase{"TestCase"};
-	Installer testCaseInstaller{&testSuite, &testCase};
+	Installer testCaseInstaller{testSuite, testCase};
 	LoggingTest loggingTest;
-	Installer testInstaller{&testCase, &loggingTest};
+	Installer testInstaller{testCase, loggingTest};
 	EXPECT_EQ(1, testSuite.children().size());
 	EXPECT_EQ(1, testCase.children().size());
 
@@ -123,15 +123,15 @@ TEST(Log) {
 TEST(All) {
 	Composite testSuite{"TestSuite"};
 	Composite testCase{"TestCase"};
-	Installer testCaseInstaller{&testSuite, &testCase};
+	Installer testCaseInstaller{testSuite, testCase};
 	PassingTest passingTest;
-	Installer passingTestInstaller{&testCase, &passingTest};
+	Installer passingTestInstaller{testCase, passingTest};
 	FailingTest failingTest;
-	Installer failingTestInstaller{&testCase, &failingTest};
+	Installer failingTestInstaller{testCase, failingTest};
 	ErringTest erringTest;
-	Installer erringTestInstaller{&testCase, &erringTest};
+	Installer erringTestInstaller{testCase, erringTest};
 	LoggingTest loggingTest;
-	Installer loggingTestInstaller{&testCase, &loggingTest};
+	Installer loggingTestInstaller{testCase, loggingTest};
 	EXPECT_EQ(1, testSuite.children().size());
 	EXPECT_EQ(4, testCase.children().size());
 

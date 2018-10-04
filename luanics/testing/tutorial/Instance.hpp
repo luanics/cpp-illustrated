@@ -5,6 +5,6 @@
 namespace luanics::testing::tutorial {
 
 /// Global instance (singleton) of the tutorial
-extern core::Composite tutorialInstance;
+core::Composite & tutorialInstance();
 
 } // namespace luanics::testing::tutorial
