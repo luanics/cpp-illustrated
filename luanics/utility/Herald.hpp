@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace luanics {
+namespace luanics::utility {
 
 class Herald {
 public:
@@ -16,4 +16,4 @@ private:
 	char const * _name;
 };
 
-} // namespace luanics
+} // namespace luanics::utility

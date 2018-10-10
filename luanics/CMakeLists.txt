@@ -3,6 +3,7 @@
 #*******************************************************************
 
 list(APPEND LuanicsLibSources crypto/Ciphers.cpp)
+list(APPEND LuanicsLibSources crypto/Histogram.cpp)
 list(APPEND LuanicsLibSources crypto/Vigenere.cpp)
 
 list(APPEND LuanicsLibSources logging/Level.cpp)
