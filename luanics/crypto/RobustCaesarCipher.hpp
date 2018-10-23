@@ -1,0 +1,28 @@
+#pragma once
+
+#include <string>
+
+namespace luanics::crypto {
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///
+/// @class RobustCaesarCipher
+///
+/// @brief Caesar cipher implementation that works with all characters.
+///
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+class RobustCaesarCipher {
+public:
+	/// @param key is the alphabetical shift applied
+	RobustCaesarCipher(int const key);
+
+	std::string encrypt(std::string plaintext) const;
+	std::string decrypt(std::string ciphertext) const;
+
+private:
+	int _key;
+}; // class RobustCaesarCipher
+
+} // namespace luanics::crypto

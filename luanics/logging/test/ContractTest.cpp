@@ -14,7 +14,7 @@ BEGIN_TEST_SET(Contract)
 TEST(All) {
 	bool isExceptionThrown = false;
 	try {
-		LUANICS_PRECONDITION(false);
+		LUANICS_EXPECTS(false);
 	}
 	catch (luanics::Error const & error) {
 		isExceptionThrown = true;

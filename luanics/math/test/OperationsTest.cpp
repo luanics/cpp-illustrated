@@ -1,15 +1,14 @@
 #include "luanics/math/Operations.hpp"
 #include "luanics/testing/Unit.hpp"
 
-namespace luanics {
-namespace math {
+namespace luanics::math {
 
 BEGIN_TEST_SET(Operations)
 
 TEST(Modulo) {
-	EXPECT_EQ(2, modulo(5,3));
-	EXPECT_EQ(1, modulo(4,3));
-	EXPECT_EQ(0, modulo(3,3));
+	EXPECT_EQ(2, positiveModulo(5,3));
+	EXPECT_EQ(1, positiveModulo(4,3));
+	EXPECT_EQ(0, positiveModulo(3,3));
 }
 
 TEST(Sign) {
@@ -23,5 +22,4 @@ TEST(Sign) {
 
 END_TEST_SET(Operations)
 
-} // namespace math
-} // namespace luanics
+} // namespace luanics::math

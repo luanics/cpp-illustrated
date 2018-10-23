@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <cfenv>
 #include <cmath>
+#include <cstdlib>
 
 //#pragma STDC FENV_ACCESS ON
 
@@ -119,9 +120,25 @@ int main(int argc, char ** argv) {
 //	bigger /= 5;
 //	std::cout << "bigger = " << bigger << std::endl;
 
+	{
+		std::array<int, 5> numbers{1, 2, 3, 4, 5};
+		std::size_t index = 2;
+		std::size_t offset = 3;
+		index -= offset;
+		std::cout << numbers[index] << std::endl;
+//		std::cout << numbers.at(index) << std::endl; // ERROR - out of range
+	}
+
 	//*******************************************************************
 	// Floating Point
 	//*******************************************************************
+
+	std::cout << "sizeof(float) = " << sizeof(float) << std::endl;
+	std::cout << "sizeof(double) = " << sizeof(double) << std::endl;
+	std::cout << "sizeof(long double) = " << sizeof(long double) << std::endl;
+
+
+
 	float bigNum = 1.8e7;
 	float smallNum = 1.;
 	float sumWithBig = bigNum;
@@ -181,6 +198,50 @@ int main(int argc, char ** argv) {
 //	uint16_t maux = 8;
 //	uint16_t mb = maux - baux;
 //	std::cout << "mb = " << mb << std::endl;
+
+	{
+		float a = atof(argv[1]);
+		float b = atof(argv[2]);
+		float c = atof(argv[3]);
+
+		std::cout << std::hexfloat << a << " - " << b << " == " << c << " ?" << std::endl;
+		std::cout << ((a - b) == c) << std::endl;
+
+		std::cout << std::hexfloat << a << " + " << b << " == " << c << " ?" << std::endl;
+		float const aplusb = a + b;
+		std::cout << std::hexfloat << aplusb << " == " << c << " ?" << std::endl;
+		std::cout << (aplusb == c) << std::endl;
+
+		float const multiplier = 100.0;
+		std::cout << std::hexfloat << multiplier << " * " << a << " == " << b << " ?" << std::endl;
+		float d = multiplier * a;
+		std::cout << (d == b) << std::endl;
+
+	    static_assert(10*0.1 - 1.0 == 0.0);
+
+	}
+
+	{
+		double a = atof(argv[1]);
+		double b = atof(argv[2]);
+		double c = atof(argv[3]);
+
+		std::cout << std::hexfloat << a << " - " << b << " == " << c << " ?" << std::endl;
+		std::cout << ((a - b) == c) << std::endl;
+
+		std::cout << std::hexfloat << a << " + " << b << " == " << c << " ?" << std::endl;
+		double const aplusb = a + b;
+		std::cout << std::hexfloat << aplusb << " == " << c << " ?" << std::endl;
+		std::cout << (aplusb == c) << std::endl;
+
+		double const multiplier = 100.0;
+		std::cout << std::hexfloat << multiplier << " * " << a << " == " << b << " ?" << std::endl;
+		double d = multiplier * a;
+		std::cout << (d == b) << std::endl;
+
+	    static_assert(10*0.1 - 1.0 == 0.0);
+
+	}
 
 	return 0;
 }

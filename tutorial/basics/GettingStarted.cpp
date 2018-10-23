@@ -1,7 +1,7 @@
 // Hi! Welcome to the "luanics" C++11 tutorial. This is a comment line.
 
 // Here are some "include directives" that import some code...
-#include "luanics/crypto/Vigenere.hpp"
+#include "../../luanics/crypto/VigenereCipher.hpp"
 #include "luanics/testing/Tutorial.hpp"
 
 // Each chapter of the tutorial is in a difference .cpp (source) file,
@@ -90,7 +90,7 @@ SECTION(Printing) {
 	PRINT(message);
 
 	// Here's some cryptography...
-	luanics::crypto::Vigenere cipher("luanics");
+	luanics::crypto::VigenereCipher cipher("luanics");
 	auto const decodedMessage = cipher.decrypt("dycemvk");
 	// This PRINT message prints the decoded message.
 	PRINT(decodedMessage);

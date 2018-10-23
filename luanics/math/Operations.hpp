@@ -10,19 +10,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace luanics {
-namespace math {
+namespace luanics::math {
 
-/// @returns the remainder of dividend / divisor
-/// Modulo implemented using "Euclidean definition", so result always positive
+/// @returns positive remainder of dividend / divisor
+/// @pre divisor > 0
 template <typename T>
-T modulo(T const dividend, T const divisor);
+T positiveModulo(T const dividend, T const divisor);
 
 /// @returns -1 if negative, 0 if zero, 1 if positive
 template <typename T>
 int sign(T number);
 
-}  // namespace math
-}  // namespace luanics
+}  // namespace luanics::math
 
 #include "luanics/math/Operations.ipp"

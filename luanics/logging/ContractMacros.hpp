@@ -15,8 +15,8 @@
 #include "luanics/logging/Logging.hpp"
 
 #define LUANICS_ASSERT(...) LUANICS_ASSERT_IMPL(__VA_ARGS__, "")
-#define LUANICS_PRECONDITION(...) LUANICS_PRECONDITION_IMPL(__VA_ARGS__, "")
-#define LUANICS_POSTCONDITION(...) LUANICS_POSTCONDITION_IMPL(__VA_ARGS__, "")
+#define LUANICS_EXPECTS(...) LUANICS_EXPECTS_IMPL(__VA_ARGS__, "")
+#define LUANICS_ENSURES(...) LUANICS_ENSURES_IMPL(__VA_ARGS__, "")
 
 #define LUANICS_ERROR(...) LUANICS_ERROR_IMPL(__VA_ARGS__, "")
 #define LUANICS_UNREACHABLE(...) LUANICS_UNREACHABLE_IMPL(__VA_ARGS__, "")
@@ -35,19 +35,19 @@
 	} \
 }
 
-#define LUANICS_PRECONDITION_IMPL(test, ...) \
+#define LUANICS_EXPECTS_IMPL(test, ...) \
 { \
 	if (!(test)) { \
-		LUANICS_FATAL("Failed PRECONDITION:" #test, __VA_ARGS__) \
-		throw luanics::PreconditionViolation("Failed PRECONDITION:" #test); \
+		LUANICS_FATAL("Failed EXPECTS:" #test, __VA_ARGS__) \
+		throw luanics::PreconditionViolation("Failed EXPECTS:" #test); \
 	} \
 }
 
-#define LUANICS_POSTCONDITION_IMPL(test, ...) \
+#define LUANICS_ENSURES_IMPL(test, ...) \
 { \
 	if (!(test)) { \
-		LUANICS_FATAL("Failed POSTCONDITION:" #test, __VA_ARGS__) \
-		throw luanics::PostconditionViolation("Failed POSTCONDITION:" #test); \
+		LUANICS_FATAL("Failed ENSURES:" #test, __VA_ARGS__) \
+		throw luanics::PostconditionViolation("Failed ENSURES:" #test); \
 	} \
 }
 

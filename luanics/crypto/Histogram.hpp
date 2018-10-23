@@ -5,6 +5,10 @@
 
 namespace luanics::crypto {
 
-void histogram(std::map<int, int> const & frequencies, std::ostream & out);
+void histogram(
+	std::map<int, int> const & frequencies,
+	std::ostream & out,
+	int const inverseScale = 1
+);
 
 } // namespace luanics::crypto

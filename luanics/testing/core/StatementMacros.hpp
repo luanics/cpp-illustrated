@@ -76,10 +76,10 @@
 #define LUANICS_EXPECT_NO_THROW_MESSAGE(expressionString)\
 	std::string("in expression ") + expressionString + std::string(" expected throw")
 
-#define LUANICS_EXPECT_PRECONDITION_MESSAGE(expressionString)\
+#define LUANICS_EXPECT_EXPECTS_MESSAGE(expressionString)\
 	std::string("in expression ") + expressionString + std::string(" expected precondition violation")
 
-#define LUANICS_EXPECT_POSTCONDITION_MESSAGE(expressionString)\
+#define LUANICS_EXPECT_ENSURES_MESSAGE(expressionString)\
 	std::string("in expression ") + expressionString + std::string(" expected postcondition violation")
 
 //*********************************************************
@@ -172,7 +172,7 @@
 	} \
 	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_NO_THROW_MESSAGE(#expression)});
 
-#define LUANICS_EXPECT_PRECONDITION_BODY(expression) \
+#define LUANICS_EXPECT_EXPECTS_BODY(expression) \
 	bool isPassing = false; \
 	try { \
 		(expression); \
@@ -181,9 +181,9 @@
 		isPassing = true; \
 	} \
 	catch (...) {} \
-	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_PRECONDITION_MESSAGE(#expression)});
+	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_EXPECTS_MESSAGE(#expression)});
 
-#define LUANICS_EXPECT_POSTCONDITION_BODY(expression) \
+#define LUANICS_EXPECT_ENSURES_BODY(expression) \
 	bool isPassing = false; \
 	try { \
 		(expression); \
@@ -192,7 +192,7 @@
 		isPassing = true; \
 	} \
 	catch (...) {} \
-	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_POSTCONDITION_MESSAGE(#expression)});
+	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_ENSURES_MESSAGE(#expression)});
 
 //*********************************************************
 // EXPECT macros
@@ -263,14 +263,14 @@
 		LUANICS_EXPECT_NO_THROW_BODY(expression) \
 	}
 
-#define LUANICS_EXPECT_PRECONDITION(expression) \
+#define LUANICS_EXPECT_EXPECTS(expression) \
 	{ \
-		LUANICS_EXPECT_PRECONDITION_BODY(expression) \
+		LUANICS_EXPECT_EXPECTS_BODY(expression) \
 	}
 
-#define LUANICS_EXPECT_POSTCONDITION(expression) \
+#define LUANICS_EXPECT_ENSURES(expression) \
 	{ \
-		LUANICS_EXPECT_POSTCONDITION_BODY(expression) \
+		LUANICS_EXPECT_ENSURES_BODY(expression) \
 	}
 
 //*********************************************************
@@ -349,14 +349,14 @@
 		if (not isPassing) return; \
 	}
 
-#define LUANICS_ASSERT_PRECONDITION(expression) \
+#define LUANICS_ASSERT_EXPECTS(expression) \
 	{ \
-		LUANICS_EXPECT_PRECONDITION_BODY(expression) \
+		LUANICS_EXPECT_EXPECTS_BODY(expression) \
 		if (not isPassing) return; \
 	}
 
-#define LUANICS_ASSERT_POSTCONDITION(expression) \
+#define LUANICS_ASSERT_ENSURES(expression) \
 	{ \
-		LUANICS_EXPECT_POSTCONDITION_BODY(expression) \
+		LUANICS_EXPECT_ENSURES_BODY(expression) \
 		if (not isPassing) return; \
 	}

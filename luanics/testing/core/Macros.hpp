@@ -31,8 +31,8 @@
 #define EXPECT_NOT_REACHED() LUANICS_EXPECT_NOT_REACHED()
 #define EXPECT_SAME(expected, actual) LUANICS_EXPECT_SAME(expected, actual)
 #define EXPECT_THROW(expression) LUANICS_EXPECT_THROW(expression)
-#define EXPECT_PRECONDITION(expression) LUANICS_EXPECT_PRECONDITION(expression)
-#define EXPECT_POSTCONDITION(expression) LUANICS_EXPECT_POSTCONDITION(expression)
+#define EXPECT_EXPECTS(expression) LUANICS_EXPECT_EXPECTS(expression)
+#define EXPECT_ENSURES(expression) LUANICS_EXPECT_ENSURES(expression)
 
 #define ASSERT_EQ(expected, actual) LUANICS_ASSERT_EQ(expected, actual)
 #define ASSERT_NE(expected, actual) LUANICS_ASSERT_NE(expected, actual)
@@ -45,7 +45,7 @@
 #define ASSERT_FALSE(expression) LUANICS_ASSERT_FALSE(expression)
 #define ASSERT_AVOIDED() LUANICS_ASSERT_AVOIDED()
 #define ASSERT_THROW(expression) LUANICS_ASSERT_THROW(expression)
-#define ASSERT_PRECONDITION(expression) LUANICS_ASSERT_PRECONDITION(expression)
-#define ASSERT_POSTCONDITION(expression) LUANICS_ASSERT_POSTCONDITION(expression)
+#define ASSERT_EXPECTS(expression) LUANICS_ASSERT_EXPECTS(expression)
+#define ASSERT_ENSURES(expression) LUANICS_ASSERT_ENSURES(expression)
 
 #endif

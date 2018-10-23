@@ -19,9 +19,9 @@
 /// First arg must be conditional test
 #define ASSERT(...) LUANICS_ASSERT(__VA_ARGS__)
 /// First arg must be conditional test
-#define PRECONDITION(...) LUANICS_PRECONDITION(__VA_ARGS__)
+#define EXPECTS(...) LUANICS_EXPECTS(__VA_ARGS__)
 /// First arg must be conditional test
-#define POSTCONDITION(...) LUANICS_POSTCONDITION(__VA_ARGS__)
+#define ENSURES(...) LUANICS_ENSURES(__VA_ARGS__)
 
 #define ERROR(message, ...) LUANICS_ERROR(message, __VA_ARGS__)
 #define UNREACHABLE(...) LUANICS_UNREACHABLE(__VA_ARGS__)

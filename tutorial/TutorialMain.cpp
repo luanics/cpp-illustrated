@@ -3,8 +3,10 @@
 #include "luanics/testing/core/ReporterAugmenter.hpp"
 #include "luanics/testing/Tutorial.hpp"
 
+#include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <iterator>
 
 using namespace luanics::testing::core;
 using namespace luanics;
@@ -66,6 +68,13 @@ int main(int argc, char * argv[]) {
 		}
 		else if (strcmp(runAllOptionName, argv[i]) == 0) {
 			isUsingFirstFail = false;
+		}
+		else if (strcmp(helpOptionName, argv[i]) == 0) {
+			std::cout << "C++ Illustrated Tutorial" << std::endl;
+			std::cout << "options:";
+			std::copy(begin(optionNames), end(optionNames), ostream_iterator<const char *>(std::cout, ","));
+			std::cout << std::endl;
+			return 0;
 		}
 	}
 

@@ -44,3 +44,6 @@ create_executable(names not_so_basics/Names.cpp)
 create_executable(type_deduction not_so_basics/TypeDeduction.cpp)
 create_executable(logging not_so_basics/Logging.cpp)
 add_subdirectory(not_so_basics/names)
+
+# Metaprogramming
+create_executable(policies metaprogramming/Policies.cpp)

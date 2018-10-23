@@ -2,9 +2,11 @@
 # Library
 #*******************************************************************
 
-list(APPEND LuanicsLibSources crypto/Ciphers.cpp)
+list(APPEND LuanicsLibSources crypto/CaesarCipher.cpp)
+list(APPEND LuanicsLibSources crypto/Helpers.cpp)
 list(APPEND LuanicsLibSources crypto/Histogram.cpp)
-list(APPEND LuanicsLibSources crypto/Vigenere.cpp)
+list(APPEND LuanicsLibSources crypto/RobustCaesarCipher.cpp)
+list(APPEND LuanicsLibSources crypto/VigenereCipher.cpp)
 
 list(APPEND LuanicsLibSources logging/Level.cpp)
 list(APPEND LuanicsLibSources logging/Logger.cpp)
@@ -36,8 +38,9 @@ set_target_properties(luanics PROPERTIES OUTPUT_NAME luanics${BUILD_POSTFIX})
 # Test
 #*******************************************************************
 
-list(APPEND LuanicsTestSources crypto/test/CiphersTest.cpp)
-list(APPEND LuanicsTestSources crypto/test/VigenereTest.cpp)
+list(APPEND LuanicsTestSources crypto/test/CaesarCipherTest.cpp)
+list(APPEND LuanicsTestSources crypto/test/HelpersTest.cpp)
+list(APPEND LuanicsTestSources crypto/test/VigenereCipherTest.cpp)
 
 list(APPEND LuanicsTestSources logging/test/ContractTest.cpp)
 list(APPEND LuanicsTestSources logging/test/SimpleSinkTest.cpp)
