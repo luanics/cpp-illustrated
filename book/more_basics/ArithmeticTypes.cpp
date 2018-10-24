@@ -36,6 +36,7 @@ int main(int argc, char ** argv) {
 	std::cout << "oneMega    = " << std::hex << oneMega << std::endl;
 	std::cout << "oneMillion = " << std::hex << std::uppercase << oneMillion << std::endl;
 	std::cout << "oneMega    = " << std::hex << std::uppercase << oneMega << std::endl;
+	std::cout << std::dec;
 
 	//*******************************************************************
 	// sizeof operator
@@ -199,6 +200,27 @@ int main(int argc, char ** argv) {
 //	uint16_t mb = maux - baux;
 //	std::cout << "mb = " << mb << std::endl;
 
+	//*********************************************************
+	// inexact representation
+	//*********************************************************
+	{
+		int const number = 987'654'321;
+		float const numberAsFloat = number;
+		int const numberAsIntAgain = numberAsFloat;
+		static_assert(number != numberAsIntAgain);
+		std::cout << "numberAsIntAgain=" << numberAsIntAgain << std::endl;
+		static_assert(static_cast<int>(static_cast<float>(987'654'321)) != 987'654'321);
+
+		static_assert(0.1 + 0.2 != 0.3);
+		std::cout << std::hexfloat << "0.1       = " << 0.1 << std::endl;
+		std::cout << std::hexfloat << "0.2       = " << 0.2 << std::endl;
+		std::cout << std::hexfloat << "0.1 + 0.2 = " << 0.1 + 0.2 << std::endl;
+		std::cout << std::hexfloat << "0.3       = " << 0.3 << std::endl;
+
+		static_assert(0.5 + 0.5 == 1.0);
+		std::cout << std::hexfloat << "0.5       = " << 0.5 << std::endl;
+		std::cout << std::hexfloat << "1.0       = " << 1.0 << std::endl;
+	}
 	{
 		float a = atof(argv[1]);
 		float b = atof(argv[2]);

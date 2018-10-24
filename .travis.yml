@@ -1,0 +1,19 @@
+dist: trusty
+language: cpp
+compiler: gcc
+addons:
+   apt:
+      sources:
+         - ubuntu-toolchain-r-test
+      packages:
+         - gcc-7
+         - g++-7
+script:
+   - export CC=gcc-7
+   - export CXX=g++-7
+   - mkdir build
+   - cd build
+   - mkdir Release
+   - cd Release
+   - cmake ../.. -DCMAKE_BUILD_TYPE=Release
+   - make all 
