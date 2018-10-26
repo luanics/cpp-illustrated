@@ -1,11 +1,12 @@
 #include "luanics/utility/Herald.hpp"
 
 #include <cassert>
-#include <iostream>
-#include <iomanip>
 #include <cfenv>
 #include <cmath>
 #include <cstdlib>
+#include <iomanip>
+#include <iostream>
+#include <type_traits>
 
 //#pragma STDC FENV_ACCESS ON
 
@@ -200,6 +201,13 @@ int main(int argc, char ** argv) {
 //	uint16_t mb = maux - baux;
 //	std::cout << "mb = " << mb << std::endl;
 
+
+	//*********************************************************
+	// implementation
+	//*********************************************************
+
+	std::cout << "is IEEE-754 supported = " << std::numeric_limits<float>::is_iec559 << std::endl;
+
 	//*********************************************************
 	// inexact representation
 	//*********************************************************
@@ -221,48 +229,20 @@ int main(int argc, char ** argv) {
 		std::cout << std::hexfloat << "0.5       = " << 0.5 << std::endl;
 		std::cout << std::hexfloat << "1.0       = " << 1.0 << std::endl;
 	}
-	{
-		float a = atof(argv[1]);
-		float b = atof(argv[2]);
-		float c = atof(argv[3]);
 
-		std::cout << std::hexfloat << a << " - " << b << " == " << c << " ?" << std::endl;
-		std::cout << ((a - b) == c) << std::endl;
+	//*********************************************************
+	// overflow and divide by zero
+	//*********************************************************
 
-		std::cout << std::hexfloat << a << " + " << b << " == " << c << " ?" << std::endl;
-		float const aplusb = a + b;
-		std::cout << std::hexfloat << aplusb << " == " << c << " ?" << std::endl;
-		std::cout << (aplusb == c) << std::endl;
+	using FloatTraits = std::numeric_limits<float>;
+	bool const isIeee754Supported = FloatTraits::is_iec559;
+	if (isIeee754Supported) {
+		assert(FloatTraits::has_infinity);
+		assert(FloatTraits::has_quiet_NaN);
+		assert(FloatTraits::has_signaling_NaN);
 
-		float const multiplier = 100.0;
-		std::cout << std::hexfloat << multiplier << " * " << a << " == " << b << " ?" << std::endl;
-		float d = multiplier * a;
-		std::cout << (d == b) << std::endl;
-
-	    static_assert(10*0.1 - 1.0 == 0.0);
-
-	}
-
-	{
-		double a = atof(argv[1]);
-		double b = atof(argv[2]);
-		double c = atof(argv[3]);
-
-		std::cout << std::hexfloat << a << " - " << b << " == " << c << " ?" << std::endl;
-		std::cout << ((a - b) == c) << std::endl;
-
-		std::cout << std::hexfloat << a << " + " << b << " == " << c << " ?" << std::endl;
-		double const aplusb = a + b;
-		std::cout << std::hexfloat << aplusb << " == " << c << " ?" << std::endl;
-		std::cout << (aplusb == c) << std::endl;
-
-		double const multiplier = 100.0;
-		std::cout << std::hexfloat << multiplier << " * " << a << " == " << b << " ?" << std::endl;
-		double d = multiplier * a;
-		std::cout << (d == b) << std::endl;
-
-	    static_assert(10*0.1 - 1.0 == 0.0);
-
+		assert(1.0f/0.0f == FloatTraits::infinity());
+		assert(0.0f/0.0f == FloatTraits::signaling_NaN());
 	}
 
 	return 0;
