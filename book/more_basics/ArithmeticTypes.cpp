@@ -131,6 +131,12 @@ int main(int argc, char ** argv) {
 //		std::cout << numbers.at(index) << std::endl; // ERROR - out of range
 	}
 
+	int big1 = 1'200'000'000;
+	int big2 = 1'500'000'000;
+	int big3 = 1'0'000'000;
+	int meanBig = (big1 + big2 + big3) / 3; // UB
+//	assert(meanBig == 1'500'000'000); // FAIL
+
 	//*******************************************************************
 	// Floating Point
 	//*******************************************************************
