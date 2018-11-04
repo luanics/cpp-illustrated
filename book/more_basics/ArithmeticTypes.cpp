@@ -137,6 +137,14 @@ int main(int argc, char ** argv) {
 	int meanBig = (big1 + big2 + big3) / 3; // UB
 //	assert(meanBig == 1'500'000'000); // FAIL
 
+	{
+		int a = -1;
+		unsigned b = 0;
+//		assert(a + b < 0); // FAIL
+		assert(a + b > 0);
+	}
+
+
 	//*******************************************************************
 	// Floating Point
 	//*******************************************************************

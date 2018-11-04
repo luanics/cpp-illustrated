@@ -2,18 +2,24 @@ dist: trusty
 language: cpp
 compiler: gcc
 addons:
-   apt:
-      sources:
-         - ubuntu-toolchain-r-test
-      packages:
-         - gcc-7
-         - g++-7
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-7
+    - g++-7
+
+matrix:
+  include:
+  - env: BUILD_TYPE=Debug 
+  - env: BUILD_TYPE=Release
+         
 script:
-   - export CC=gcc-7
-   - export CXX=g++-7
-   - mkdir build
-   - cd build
-   - mkdir Release
-   - cd Release
-   - cmake ../.. -DCMAKE_BUILD_TYPE=Release
-   - make all 
+- export CC=gcc-7
+- export CXX=g++-7
+- mkdir build
+- cd build
+- mkdir ${BUILD_TYPE}
+- cd ${BUILD_TYPE}
+- cmake ../.. -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+- make all 
