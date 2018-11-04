@@ -1,5 +1,5 @@
 #include "luanics/meta/TypeTraits.hpp"
-#include "luanics/test/Unit.hpp"
+#include "luanics/testing/Unit.hpp"
 
 #include <iostream>
 #include <type_traits>

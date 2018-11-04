@@ -27,7 +27,8 @@ create_executable(variables basics/Variables.cpp)
 create_executable(objects basics/Objects.cpp)
 
 # More Basics
-create_executable(arithmetic_types more_basics/ArithmeticTypes.cpp)
+create_executable(integral_types more_basics/IntegralTypes.cpp)
+create_executable(floating_point_types more_basics/FloatingPointTypes.cpp)
 create_executable(control_flow more_basics/ControlFlow.cpp)
 create_executable(cryptography more_basics/Cryptography.cpp)
 create_executable(expressions more_basics/Expressions.cpp)

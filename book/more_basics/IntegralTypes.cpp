@@ -90,13 +90,17 @@ int main(int argc, char ** argv) {
 	// Integral Pitfalls
 	//*******************************************************************
 
-	std::uint8_t big = 252;
-	big += 7;
-//	assert(big == 259); // ERROR - forgot overflow
-	assert(big == 3); // OK - overflow
+	{
+		std::uint8_t big = 252;
+		big += 7;
+//		assert(big == 259); // ERROR - forgot overflow
+		assert(big == 3); // OK - overflow
+	}
 
-	std::int8_t x = 127;
-	x += 7; // UB - signed overflow
+	{
+		std::int8_t x = 127;
+		x += 7; // UB - signed overflow
+	}
 
 	{
 		int big1 = 1'200'000'000;
@@ -113,10 +117,12 @@ int main(int argc, char ** argv) {
 		assert(a + b > 0);
 	}
 
-	int sum = 0;
-	int count = 0;
-	// Add up some numbers... maybe
-	int mean = sum /count; // UB if count == 0
+	{
+		int sum = 0;
+		int count = 0;
+		// Add up some numbers... maybe
+		int mean = sum /count; // UB if count == 0
+	}
 
 	//*******************************************************************
 	// Floating Point

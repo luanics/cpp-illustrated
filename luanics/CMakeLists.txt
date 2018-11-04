@@ -49,6 +49,9 @@ list(APPEND LuanicsTestSources logging/test/TupleRecordTest.cpp)
 
 list(APPEND LuanicsTestSources math/test/OperationsTest.cpp)
 
+list(APPEND LuanicsTestSources meta/test/DetectionTest.cpp)
+list(APPEND LuanicsTestSources meta/test/TypeTraitsTest.cpp)
+
 list(APPEND LuanicsTestSources testing/core/test/OutcomeTest.cpp)
 list(APPEND LuanicsTestSources testing/core/test/CoreTest.cpp)
 list(APPEND LuanicsTestSources testing/core/test/StringMatcherFilterTest.cpp)
@@ -60,6 +63,7 @@ list(APPEND LuanicsTestSources string/test/ExactMatcherTest.cpp)
 list(APPEND LuanicsTestSources string/test/ManipulationTest.cpp)
 
 list(APPEND LuanicsTestSources utility/test/ExpressionAnalysisTest.cpp)
+list(APPEND LuanicsTestSources utility/test/HeraldTest.cpp)
 list(APPEND LuanicsTestSources utility/test/PathsTest.cpp)
 list(APPEND LuanicsTestSources utility/test/TuplesTest.cpp)
 
