@@ -8,6 +8,7 @@ list(APPEND TutorialSources basics/Directives.cpp)
 list(APPEND TutorialSources basics/Projects.cpp)
 
 list(APPEND TutorialSources more_basics/ArithmeticTypes.cpp)
+list(APPEND TutorialSources more_basics/Functions.cpp)
 list(APPEND TutorialSources more_basics/ControlFlow.cpp)
 list(APPEND TutorialSources more_basics/Expressions.cpp)
 list(APPEND TutorialSources more_basics/Introspection.cpp)
