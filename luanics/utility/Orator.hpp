@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace luanics {
+namespace luanics::utility {
 
 class Orator {
 public:
@@ -28,4 +28,4 @@ public:
 	}
 }; // class Orator
 
-} // namespace luanics
+} // namespace luanics::utility
