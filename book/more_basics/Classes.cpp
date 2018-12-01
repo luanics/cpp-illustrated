@@ -75,7 +75,6 @@ Coder const & topCoder(Coder const & a, Coder const & b) {
 } // namespace variables
 
 namespace functions {
-
 struct Coder {
 	void discipline() {breaksPerDay -= 1;}
 	void train() {linesPerHour += 10;}
@@ -88,7 +87,6 @@ struct Coder {
 	int16_t linesPerHour;
 	int8_t breaksPerDay;
 };
-
 } // namespace functions
 
 //*********************************************************
@@ -96,7 +94,6 @@ struct Coder {
 //*********************************************************
 
 namespace access {
-
 struct Coder {
 public:
 	void discipline() {breaksPerDay -= 1;}
@@ -110,7 +107,6 @@ private:
 	int16_t linesPerHour;
 	int8_t breaksPerDay;
 };
-
 } // namespace access
 
 //*********************************************************
@@ -118,7 +114,6 @@ private:
 //*********************************************************
 
 namespace constructors {
-
 struct Coder {
 public:
 	/// Parameterized constructor
@@ -152,15 +147,60 @@ private:
 	int16_t _linesPerHour;
 	int8_t _breaksPerDay;
 };
-
 } // namespace constructors
+
+//*********************************************************
+// Constructors
+//*********************************************************
+
+namespace friends {
+struct Coder {
+public:
+	friend void promote(Coder &);
+
+	/// Parameterized constructor
+	Coder(
+		std::string const & name,
+		uint32_t const serialNumber,
+		int16_t const linesPerHour,
+		int8_t const breaksPerDay
+	) :
+		_name{name},
+		_serialNumber{serialNumber},
+		_linesPerHour{linesPerHour},
+		_breaksPerDay{breaksPerDay} {}
+	/// Default constructor
+	Coder() = default;
+
+	std::string const & name() {return _name;}
+	uint32_t serialNumber() {return _serialNumber;}
+	int16_t linesPerHour() {return _linesPerHour;}
+	int8_t breaksPerDay() {return _breaksPerDay;}
+
+	void discipline() {_breaksPerDay -= 1;}
+	void train() {_linesPerHour += 10;}
+	int16_t linesPerDay() {
+		return _linesPerHour * (WORK_HOURS_PER_DAY - _breaksPerDay);
+	}
+
+private:
+	std::string _name;
+	uint32_t _serialNumber;
+	int16_t _linesPerHour;
+	int8_t _breaksPerDay;
+};
+
+void promote(Coder & coder) {
+	coder._breaksPerDay += 1;
+}
+
+} // namespace friends
 
 //*********************************************************
 // Constness
 //*********************************************************
 
 namespace constness {
-
 struct Coder {
 public:
 	Coder(
@@ -192,9 +232,123 @@ private:
 	int16_t _linesPerHour;
 	int8_t _breaksPerDay;
 };
-
 } // namespace constness
 
+//*********************************************************
+// Classes
+//*********************************************************
+
+namespace classes {
+class Coder {
+public:
+	Coder(
+		std::string const name,
+		uint32_t const serialNumber,
+		int16_t const linesPerHour,
+		int8_t const breaksPerDay
+	) :
+		_name{name},
+		_serialNumber{serialNumber},
+		_linesPerHour{linesPerHour},
+		_breaksPerDay{breaksPerDay} {}
+	Coder() = default;
+
+	std::string const & name() const {return _name;}
+	uint32_t serialNumber() const {return _serialNumber;}
+	int16_t linesPerHour() const {return _linesPerHour;}
+	int8_t breaksPerDay() const {return _breaksPerDay;}
+
+	void discipline() {_breaksPerDay -= 1;}
+	void train() {_linesPerHour += 10;}
+	int16_t linesPerDay() const {
+		return _linesPerHour * (WORK_HOURS_PER_DAY - _breaksPerDay);
+	}
+
+private:
+	std::string _name;
+	uint32_t _serialNumber;
+	int16_t _linesPerHour;
+	int8_t _breaksPerDay;
+};
+} // namespace classes
+
+//*********************************************************
+// Statics
+//*********************************************************
+
+namespace statics {
+class Coder {
+public:
+	Coder(
+		std::string const name,
+		uint32_t const serialNumber,
+		int16_t const linesPerHour,
+		int8_t const breaksPerDay
+	) :
+		_name{name},
+		_serialNumber{serialNumber},
+		_linesPerHour{linesPerHour},
+		_breaksPerDay{breaksPerDay} {}
+	Coder() = default;
+
+	std::string const & name() const {return _name;}
+	uint32_t serialNumber() const {return _serialNumber;}
+	int16_t linesPerHour() const {return _linesPerHour;}
+	int8_t breaksPerDay() const {return _breaksPerDay;}
+
+	void discipline() {_breaksPerDay -= 1;}
+	void train() {_linesPerHour += 10;}
+	static const int8_t WORK_HOURS_PER_DAY = 8;
+	int16_t linesPerDay() const {
+		return _linesPerHour * (WORK_HOURS_PER_DAY - _breaksPerDay);
+	}
+
+private:
+	std::string _name;
+	uint32_t _serialNumber;
+	int16_t _linesPerHour;
+	int8_t _breaksPerDay;
+};
+} // namespace statics
+
+//*********************************************************
+// this
+//*********************************************************
+
+namespace thissed {
+class Coder {
+public:
+	Coder(
+		std::string const name,
+		uint32_t const serialNumber,
+		int16_t const linesPerHour,
+		int8_t const breaksPerDay
+	) :
+		_name{name},
+		_serialNumber{serialNumber},
+		_linesPerHour{linesPerHour},
+		_breaksPerDay{breaksPerDay} {}
+	Coder() = default;
+
+	std::string const & name() const {return this->_name;}
+	uint32_t serialNumber() const {return this->_serialNumber;}
+	int16_t linesPerHour() const {return this->_linesPerHour;}
+	int8_t breaksPerDay() const {return this->_breaksPerDay;}
+
+	void discipline() {this->_breaksPerDay -= 1;}
+	void train() {this->_linesPerHour += 10;}
+	static const int8_t WORK_HOURS_PER_DAY = 8;
+	int16_t linesPerDay() const {
+		return this->_linesPerHour * (WORK_HOURS_PER_DAY - this->_breaksPerDay);
+	}
+
+private:
+	std::string _name;
+	uint32_t _serialNumber;
+	int16_t _linesPerHour;
+	int8_t _breaksPerDay;
+};
+} // namespace thissed
 
 int main() {
 	luanics::utility::Herald herald{"Classes"};
@@ -278,6 +432,17 @@ int main() {
 	}
 
 	//*********************************************************
+	// Friends
+	//*********************************************************
+
+	{
+		using namespace friends;
+		Coder fido{"Fido", 10103, 10, 1};
+		promote(fido);
+		assert(fido.breaksPerDay() == 2);
+	}
+
+	//*********************************************************
 	// Constness
 	//*********************************************************
 
@@ -291,6 +456,27 @@ int main() {
 		using namespace constness;
 		Coder const fido{"Fido", 10103, 10, 1};
 		assert(fido.linesPerHour() == 10); // OK
+	}
+
+	//*********************************************************
+	// Classes
+	//*********************************************************
+
+	{
+		using namespace classes;
+		Coder const fido{"Fido", 10103, 10, 1};
+		assert(fido.linesPerHour() == 10); // OK
+	}
+
+	//*********************************************************
+	// Statics
+	//*********************************************************
+
+	{
+		using namespace statics;
+		assert(Coder::WORK_HOURS_PER_DAY == 8);
+		Coder fido{};
+		assert(fido.WORK_HOURS_PER_DAY == 8);
 	}
 
 	return 0;
