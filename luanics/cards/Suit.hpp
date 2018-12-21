@@ -3,8 +3,7 @@
 #include <cstdint>
 #include <iosfwd>
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,5 +39,4 @@ std::ostream & operator<<(std::ostream & out, Suit const & suit);
 std::istream & operator>>(std::istream & in, Suit & suit);
 //@}
 
-}  // namespace cards
-}  // namespace luanics
+} // namespace luanics::cards

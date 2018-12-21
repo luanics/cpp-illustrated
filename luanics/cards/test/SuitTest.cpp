@@ -8,7 +8,6 @@ BEGIN_TEST_SET(Suit)
 
 TEST(Queries) {
 	Suit const clubs{Suit::CLUBS};
-
 }
 
 TEST(Io) {
@@ -19,4 +18,3 @@ END_TEST_SET(Suit)
 
 } // namespace cards
 } // namespace luanics
-

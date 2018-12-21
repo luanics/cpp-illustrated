@@ -14,8 +14,7 @@ constexpr auto SPADES_STRING = "SPADES";
 
 }
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 //*****************************************************************************
 // Queries
@@ -35,7 +34,7 @@ bool isRed(Suit const & suit) {
 
 std::ostream & operator<<(std::ostream & out, Suit const & suit) {
 	// See Rank.cpp for an example
-	CREATE ANSWER(
+//	CREATE ANSWER(
 	switch (suit) {
 		case Suit::CLUBS: out << CLUBS_STRING; break;
 		case Suit::DIAMONDS: out << DIAMONDS_STRING; break;
@@ -43,13 +42,13 @@ std::ostream & operator<<(std::ostream & out, Suit const & suit) {
 		case Suit::SPADES: out << SPADES_STRING; break;
 		default: throw Error{"Invalid Rank value:" + std::to_string(static_cast<uint8_t>(suit))};
 	}
-	)
+//	)
 	return out;
 }
 
 std::istream & operator>>(std::istream & in, Suit & suit) {
 	// See Rank.cpp for an example
-	CREATE ANSWER(
+//	CREATE ANSWER(
 	std::string s;
 	in >> s;
 	if (s == CLUBS_STRING) suit = Suit::CLUBS;
@@ -57,9 +56,8 @@ std::istream & operator>>(std::istream & in, Suit & suit) {
 	else if (s == HEARTS_STRING) suit = Suit::HEARTS;
 	else if (s == SPADES_STRING) suit = Suit::SPADES;
 	else throw Error{"Invalid Suit string:" + s};
-	)
+//	)
 	return in;
 }
 
-}  // namespace cards
-}  // namespace luanics
+} // namespace luanics::cards

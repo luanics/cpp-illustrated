@@ -2,8 +2,7 @@
 #include "luanics/testing/Unit.hpp"
 #include "luanics/utility/Streams.hpp"
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 BEGIN_TEST_SET(Rank)
 
@@ -42,22 +41,22 @@ TEST(Io) {
 	out << Rank::TWO;
 	EXPECT_EQ("TWO", out.str());
 
-	reset(out);
+	utility::reset(out);
 	out << Rank::JACK;
 	EXPECT_EQ("JACK", out.str());
 
 	std::istringstream in;
 	Rank rank;
 
-	reset(in, "TWO");
+	utility::reset(in, "TWO");
 	in >> rank;
 	EXPECT_EQ(Rank::TWO, rank);
 
-	reset(in, "JACK");
+	utility::reset(in, "JACK");
 	in >> rank;
 	EXPECT_EQ(Rank::JACK, rank);
 
-	reset(in, "JILL");
+	utility::reset(in, "JILL");
 	EXPECT_THROW(in >> rank);
 
 	PRINT("Hello");
@@ -65,5 +64,4 @@ TEST(Io) {
 
 END_TEST_SET(Rank)
 
-} // namespace cards
-} // namespace luanics
+} // namespace luanics::cards

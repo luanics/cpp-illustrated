@@ -8,8 +8,7 @@ namespace {
 constexpr auto DELIMITER = "of";
 }
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 Card::Card() :
 	_rank{Rank::ACE},
@@ -48,10 +47,9 @@ std::istream & operator>>(std::istream & in, Card & card) {
 	Suit suit;
 	in >> rank >> delimiter >> suit;
 	if (delimiter != DELIMITER) {
-		throw Error("Invalid Card delimiter:" + delimiter);
+		throw Error("Invalid Card delimiter: " + delimiter);
 	}
 	return in;
 }
 
-}  // namespace cards
-}  // namespace luanics
+} // namespace luanics::cards

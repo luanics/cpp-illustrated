@@ -23,21 +23,20 @@ constexpr auto ACE_STRING = "ACE";
 
 }
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 //*****************************************************************************
 // Queries
 //*****************************************************************************
 
 bool isLess(Rank const lhs, Rank const rhs, bool const isAceHigh) {
-	CREATE ANSWER(
+//	CREATE ANSWER(
 	return distance(lhs, rhs, isAceHigh) > 0;
-	)
+//	)
 }
 
 int distance(Rank const lhs, Rank const rhs, bool const isAceHigh) {
-	CREATE ANSWER(
+//	CREATE ANSWER(
 	int leftValue = static_cast<int>(lhs);
 	if (lhs == Rank::ACE and not isAceHigh) {
 		leftValue = 1;
@@ -47,13 +46,13 @@ int distance(Rank const lhs, Rank const rhs, bool const isAceHigh) {
 		rightValue = 1;
 	}
 	return rightValue - leftValue;
-	)
+//	)
 }
 
 bool isFace(Rank const rank) {
-	CREATE ANSWER(
+//	CREATE ANSWER(
 	return rank == Rank::JACK or rank == Rank::QUEEN or rank == Rank::KING;
-	)
+//	)
 }
 
 //*****************************************************************************
@@ -102,5 +101,4 @@ std::istream & operator>>(std::istream & in, Rank & rank) {
 	return in;
 }
 
-}  // namespace cards
-}  // namespace luanics
+} // namespace luanics::cards

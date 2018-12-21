@@ -2,6 +2,10 @@
 # Library
 #*******************************************************************
 
+list(APPEND LuanicsLibSources cards/Card.cpp)
+list(APPEND LuanicsLibSources cards/Rank.cpp)
+list(APPEND LuanicsLibSources cards/Suit.cpp)
+
 list(APPEND LuanicsLibSources crypto/CaesarCipher.cpp)
 list(APPEND LuanicsLibSources crypto/Helpers.cpp)
 list(APPEND LuanicsLibSources crypto/Histogram.cpp)
@@ -30,6 +34,7 @@ list(APPEND LuanicsLibSources string/EnumeratedMatcher.cpp)
 list(APPEND LuanicsLibSources string/ExactMatcher.cpp)
 
 list(APPEND LuanicsLibSources utility/Paths.cpp)
+list(APPEND LuanicsLibSources utility/Streams.cpp)
 
 add_library(luanics SHARED ${LuanicsLibSources})
 set_target_properties(luanics PROPERTIES OUTPUT_NAME luanics${BUILD_POSTFIX})
@@ -37,6 +42,10 @@ set_target_properties(luanics PROPERTIES OUTPUT_NAME luanics${BUILD_POSTFIX})
 #*******************************************************************
 # Test
 #*******************************************************************
+
+list(APPEND LuanicsTestSources cards/test/CardTest.cpp)
+list(APPEND LuanicsTestSources cards/test/RankTest.cpp)
+list(APPEND LuanicsTestSources cards/test/SuitTest.cpp)
 
 list(APPEND LuanicsTestSources crypto/test/CaesarCipherTest.cpp)
 list(APPEND LuanicsTestSources crypto/test/HelpersTest.cpp)
