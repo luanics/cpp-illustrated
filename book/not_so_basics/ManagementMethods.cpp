@@ -5,15 +5,15 @@
 #include <cassert>
 #include <iostream>
 
-//*******************************************************************
-// Contruction
-//*******************************************************************
+//*********************************************************
+// Construction
+//*********************************************************
 
 class Person {
 public:
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	/// @name Construction
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	//@{
 	/// Default constructor
 	Person();
@@ -25,9 +25,9 @@ public:
 	Person(Person && other);
 	//@}
 
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	/// @name Assignment
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	//@{
 	/// Copy assignment
 	Person & operator=(Person const & other);
@@ -35,9 +35,9 @@ public:
 	Person & operator=(Person && other);
 	//@}
 
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	/// @name Destruction
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	//@{
 	/// Destructor
 	~Person();
@@ -102,41 +102,29 @@ struct FullName {
 		assert(_last == "Bond");
 	}
 
-	std::string _first = "James"; // default member initializer
-	std::string _last = "Bond";   // default member initializer
+	std::string _first{"James"}; // default member initializer
+	std::string _last{"Bond"};   // default member initializer
 };
 
 struct BadName {
 	BadName(std::string const & first, std::string const & last) :
-		_first{first}, _last{last}, _full{_first + " " + _last}
+		_first{first}, _last{last}, _full{_first + " " + _last} // UB
 	{}
 
-	std::string _full;
+	std::string _full; // :(
 	std::string _first;
 	std::string _last;
 };
 
 struct GoodName {
 	GoodName(std::string const & first, std::string const & last) :
-		_first{first}, _last{last}, _full{_first + " " + _last}
+		_first{first}, _last{last}, _full{_first + " " + _last} // OK
 	{}
 
-	std::string _full;
 	std::string _first;
 	std::string _last;
+	std::string _full; // :)
 };
-
-//*********************************************************
-// Copy and move constructors
-//*********************************************************
-
-Person::Person(Person const & other)
-	: _name{other._name}, _age{other._age}
-{}
-
-Person::Person(Person && other)
-	: _name{std::move(other._name)}, _age{other._age}
-{}
 
 //*********************************************************
 // Delegating constructors
@@ -170,6 +158,20 @@ Array2::Array2(std::initializer_list<ValueType> values) :
 }
 
 //*********************************************************
+// Copy and move constructors
+//*********************************************************
+
+// copy constructor implementation
+Person::Person(Person const & other)
+	: _name{other._name}, _age{other._age}
+{}
+
+// move constructor implementation
+Person::Person(Person && other)
+	: _name{std::move(other._name)}, _age{other._age}
+{}
+
+//*********************************************************
 // Assignment
 //*********************************************************
 
@@ -191,10 +193,9 @@ Person & Person::operator=(Person && other) {
 
 Person::~Person() {}
 
-
-//*******************************************************************
+//*********************************************************
 // Defaulted methods
-//*******************************************************************
+//*********************************************************
 
 class Empty {};
 
@@ -254,9 +255,9 @@ public:
 	Uncopyable & operator=(Uncopyable && other) = default;
 };
 
-//*******************************************************************
-// Named Constructors
-//*******************************************************************
+//*********************************************************
+// Named constructors
+//*********************************************************
 
 class Color {
 public:
@@ -284,6 +285,17 @@ Color Color::fromCmy(ValueType const cyan, ValueType const magenta, ValueType co
 	ValueType const green = 255 - magenta;
 	ValueType const blue = 255 - yellow;
 	return Color{red, green, blue};
+}
+
+//*********************************************************
+// Copy elision
+//*********************************************************
+
+namespace luanics::utility {
+	Orator f(Orator o) {
+		return o;
+	}
+
 }
 
 //*******************************************************************
@@ -409,6 +421,20 @@ int main(int argc, char ** argv) {
 		Color red = Color::fromRgb(255, 0, 0);
 		Color alsoRed = Color::fromCmy(0, 255, 255);
 	}
+
+	//*********************************************************
+	// Access control
+	//*********************************************************
+
+	{
+//		Color maybeRed{255, 0, 0}; // ERROR - private
+	}
+
+	//*********************************************************
+	// Copy elision
+	//*********************************************************
+
+
 
 	return 0;
 }
