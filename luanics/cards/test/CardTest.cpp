@@ -1,5 +1,6 @@
 #include "luanics/cards/Card.hpp"
 #include "luanics/testing/Unit.hpp"
+#include "luanics/utility/Streams.hpp"
 
 namespace luanics::cards {
 
@@ -23,7 +24,15 @@ TEST(Comparison) {                     // test: "Comparison"
 }
 
 TEST(Io) {
+	std::ostringstream out;
+	out << Card{Rank::JACK, Suit::DIAMONDS};
+	EXPECT_EQ("JACK of DIAMONDS", out.str());
 
+	Card card;
+	std::istringstream{"JACK of DIAMONDS"} >> card;
+	EXPECT_EQ(Card(Rank::JACK, Suit::DIAMONDS), card);
+
+	EXPECT_THROW(std::istringstream{"JILL of HILLS"} >> card);
 }
 
 END_TEST_SET(Card)

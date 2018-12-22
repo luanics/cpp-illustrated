@@ -49,6 +49,7 @@ std::istream & operator>>(std::istream & in, Card & card) {
 	if (delimiter != DELIMITER) {
 		throw Error("Invalid Card delimiter: " + delimiter);
 	}
+	card = Card{rank, suit};
 	return in;
 }
 

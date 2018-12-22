@@ -14,13 +14,16 @@ namespace cards {
 ///
 /// @class Deck
 ///
-/// @brief A standard deck of cards.
+/// @brief A standard (face-down) deck of cards.
+///
+/// The Desk is "face-down" in that you can't peek at the top card, you can
+///  only "draw()" it to see what it is.
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 class Deck {
 public:
-	/// Constructs an ordered, 52 card deck.
+	/// Constructs an ordered, 52-card deck.
 	/// Order is TWO of CLUBS, TWO of DIAMONDS, ..., up to ACE of SPADES,
 	///  with ACE of SPADES as the first draw card.
 	Deck();

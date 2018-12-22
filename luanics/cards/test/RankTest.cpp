@@ -38,28 +38,14 @@ TEST(IsLess) {
 
 TEST(Io) {
 	std::ostringstream out;
-	out << Rank::TWO;
-	EXPECT_EQ("TWO", out.str());
-
-	utility::reset(out);
 	out << Rank::JACK;
 	EXPECT_EQ("JACK", out.str());
 
-	std::istringstream in;
 	Rank rank;
-
-	utility::reset(in, "TWO");
-	in >> rank;
-	EXPECT_EQ(Rank::TWO, rank);
-
-	utility::reset(in, "JACK");
-	in >> rank;
+	std::istringstream{"JACK"} >> rank;
 	EXPECT_EQ(Rank::JACK, rank);
 
-	utility::reset(in, "JILL");
-	EXPECT_THROW(in >> rank);
-
-	PRINT("Hello");
+	EXPECT_THROW(std::istringstream{"JILL"} >> rank);
 }
 
 END_TEST_SET(Rank)

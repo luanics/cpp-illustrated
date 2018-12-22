@@ -18,7 +18,7 @@
 
 #define PRINT(expression) LUANICS_PRINT(expression)
 
-#define EXPECT_EQ(expected, actual) LUANICS_EXPECT_EQ(expected, actual)
+#define EXPECT_EQ(expected, actual) LUANICS_EXPECT_EQ((expected), (actual))
 #define EXPECT_NE(expected, actual) LUANICS_EXPECT_NE(expected, actual)
 #define EXPECT_LT(small, large) LUANICS_EXPECT_LT(small, large)
 #define EXPECT_LE(small, large) LUANICS_EXPECT_LE(small, large)
