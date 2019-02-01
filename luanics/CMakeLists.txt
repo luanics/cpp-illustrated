@@ -2,6 +2,8 @@
 # Library
 #*******************************************************************
 
+list(APPEND LuanicsLibSources benchmarking/Winner.cpp)
+
 list(APPEND LuanicsLibSources cards/Card.cpp)
 list(APPEND LuanicsLibSources cards/Rank.cpp)
 list(APPEND LuanicsLibSources cards/Suit.cpp)
@@ -16,6 +18,8 @@ list(APPEND LuanicsLibSources logging/Level.cpp)
 list(APPEND LuanicsLibSources logging/Logger.cpp)
 list(APPEND LuanicsLibSources logging/SimpleSink.cpp)
 list(APPEND LuanicsLibSources logging/SimpleSource.cpp)
+
+list(APPEND LuanicsLibSources profiling/GlobalNodeManager.cpp)
 
 list(APPEND LuanicsLibSources testing/core/AugmentedReporterDecorator.cpp)
 list(APPEND LuanicsLibSources testing/core/Composite.cpp)
@@ -43,6 +47,9 @@ set_target_properties(luanics PROPERTIES OUTPUT_NAME luanics${BUILD_POSTFIX})
 # Test
 #*******************************************************************
 
+list(APPEND LuanicsTestSources benchmarking/test/BenchmarkerTest.cpp)
+list(APPEND LuanicsTestSources benchmarking/test/ShowdownTest.cpp)
+
 list(APPEND LuanicsTestSources cards/test/CardTest.cpp)
 list(APPEND LuanicsTestSources cards/test/RankTest.cpp)
 list(APPEND LuanicsTestSources cards/test/SuitTest.cpp)
@@ -61,10 +68,17 @@ list(APPEND LuanicsTestSources math/test/OperationsTest.cpp)
 list(APPEND LuanicsTestSources meta/test/DetectionTest.cpp)
 list(APPEND LuanicsTestSources meta/test/TypeTraitsTest.cpp)
 
+list(APPEND LuanicsTestSources profiling/test/NodeManagerTest.cpp)
+list(APPEND LuanicsTestSources profiling/test/NodeTest.cpp)
+
 list(APPEND LuanicsTestSources testing/core/test/OutcomeTest.cpp)
 list(APPEND LuanicsTestSources testing/core/test/CoreTest.cpp)
 list(APPEND LuanicsTestSources testing/core/test/StringMatcherFilterTest.cpp)
 list(APPEND LuanicsTestSources testing/tutorial/test/ReporterAdapterTest.cpp)
+
+list(APPEND LuanicsTestSources statistics/test/BasicTest.cpp)
+list(APPEND LuanicsTestSources statistics/test/ConceptsTest.cpp)
+list(APPEND LuanicsTestSources statistics/test/OnlineTest.cpp)
 
 list(APPEND LuanicsTestSources string/test/AllMatcherTest.cpp)
 list(APPEND LuanicsTestSources string/test/EnumeratedMatcherTest.cpp)
@@ -73,7 +87,9 @@ list(APPEND LuanicsTestSources string/test/ManipulationTest.cpp)
 
 list(APPEND LuanicsTestSources utility/test/ExpressionAnalysisTest.cpp)
 list(APPEND LuanicsTestSources utility/test/HeraldTest.cpp)
+list(APPEND LuanicsTestSources utility/test/ManualClockTest.cpp)
 list(APPEND LuanicsTestSources utility/test/PathsTest.cpp)
+list(APPEND LuanicsTestSources utility/test/TimerTest.cpp)
 list(APPEND LuanicsTestSources utility/test/TuplesTest.cpp)
 
 add_executable(luanics_test TestMain.cpp ${LuanicsTestSources})

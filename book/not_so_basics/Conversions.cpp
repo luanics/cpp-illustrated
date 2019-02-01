@@ -17,6 +17,12 @@ public:
 	Int(int value) : _value{value} {} // Constructor
 	void add(Int const & other) {_value += other._value;}
 	operator int() {return _value;}   // Conversion function
+
+	int & value() {
+		return const_cast<int&>(const_cast<Int const *>(this)->value());
+	}
+	int const & value() const {return _value;}
+
 private:
 	int _value;
 };
@@ -44,6 +50,7 @@ struct Derived1 : Base {
 struct Derived2 : Base {
 	virtual int value() const override final {return 1;}
 };
+
 
 int main() {
 	//*********************************************************

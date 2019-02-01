@@ -49,8 +49,8 @@ void Hand::updateScore() {
 	_score += numAces; // ... each ace worth at least one
 	int gap = bestScore - _score;
 	int const gapInTens = gap / 10;
-	int const acesActivated = std::max(0, std::min(gapInTens, numAces));
-	_score += acesActivated * 10;
+	int const numAcesActivated = std::max(0, std::min(gapInTens, numAces));
+	_score += numAcesActivated * 10;
 
 	// Check if bust
 	if (_score > bestScore) {

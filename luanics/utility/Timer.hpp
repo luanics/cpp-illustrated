@@ -1,7 +1,5 @@
 #pragma once
 
-#include "luanics/utility/Duration.hpp"
-
 #include <chrono>
 
 namespace luanics::utility {
@@ -13,20 +11,21 @@ namespace luanics::utility {
 ///
 /// @brief Stopwatch-style timer based on std::chrono clocks.
 ///
-/// Duration is fixed at nanosecond resolution.
-///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ClockT = std::chrono::high_resolution_clock>
 class Timer {
 public:
+	using ClockType = ClockT;
+	using DurationType = typename ClockT::duration;
+
 	/// start() called on construction
 	Timer();
 
 	/// "start" the Timer running from current time
 	void start();
 	/// @returns time elapsed since start() called
-	Duration elapsed() const;
+	DurationType elapsed() const;
 
 private:
 	using TimeType = typename ClockT::time_point;

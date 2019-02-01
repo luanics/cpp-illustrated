@@ -13,7 +13,10 @@ TEST(Add) {                           // test: "Add"
 	Card const aceOfSpades{Rank::ACE, Suit::SPADES};
 	hand.add(aceOfSpades);
 	ASSERT_EQ(1, hand.cards().size()); // test statement
-	EXPECT_EQ(aceOfSpaces, hand.cards().back(); // test statement
+	EXPECT_EQ(                         // test statement
+		aceOfSpades,
+		hand.cards().back()
+	);
 }
 
 TEST(ScoreWithoutAces) {              // test: "ScoreWithoutAces"

@@ -268,11 +268,6 @@
 		LUANICS_EXPECT_EXPECTS_BODY(expression) \
 	}
 
-#define LUANICS_EXPECT_ENSURES(expression) \
-	{ \
-		LUANICS_EXPECT_ENSURES_BODY(expression) \
-	}
-
 //*********************************************************
 // ASSERT macros
 //*********************************************************
@@ -285,7 +280,7 @@
 
 #define LUANICS_ASSERT_NE(expected, actual) \
 	{ \
-		LUANICS_ASSERT_NE_BODY(expected, actual) \
+		LUANICS_EXPECT_NE_BODY(expected, actual) \
 		if (not isPassing) return; \
 	}
 
@@ -352,11 +347,5 @@
 #define LUANICS_ASSERT_EXPECTS(expression) \
 	{ \
 		LUANICS_EXPECT_EXPECTS_BODY(expression) \
-		if (not isPassing) return; \
-	}
-
-#define LUANICS_ASSERT_ENSURES(expression) \
-	{ \
-		LUANICS_EXPECT_ENSURES_BODY(expression) \
 		if (not isPassing) return; \
 	}

@@ -53,13 +53,25 @@ private:
 };
 // class Person
 
+// default constructor implementation
 Person::Person()
 	: _name{}, _age{}
 {}
 
+// parameterized constructor implementation
 Person::Person(std::string const & name, unsigned const age)
 	: _name{name}, _age{age}
 {}
+
+// copy constructor implementation
+Person::Person(Person const & other)
+	: _name{other._name}, _age{other._age}
+{}
+
+// move constructor implementation
+Person::Person(Person && other)
+	: _name{std::move(other._name)}, _age{other._age}
+{other._age = 0;}
 
 //*********************************************************
 // Construction Categories
@@ -158,29 +170,17 @@ Array2::Array2(std::initializer_list<ValueType> values) :
 }
 
 //*********************************************************
-// Copy and move constructors
-//*********************************************************
-
-// copy constructor implementation
-Person::Person(Person const & other)
-	: _name{other._name}, _age{other._age}
-{}
-
-// move constructor implementation
-Person::Person(Person && other)
-	: _name{std::move(other._name)}, _age{other._age}
-{}
-
-//*********************************************************
 // Assignment
 //*********************************************************
 
+// copy assignment implementation
 Person & Person::operator=(Person const & other) {
 	_name = other._name;
 	_age = other._age;
 	return *this;
 }
 
+// move assignment implementation
 Person & Person::operator=(Person && other) {
 	_name = std::move(other._name);
 	_age = other._age;
@@ -209,7 +209,18 @@ public:
 	~AlsoEmpty() = default;
 };
 
-class Implicit {
+class ImplicitlyDefaulted {
+private:
+	std::string _name;
+	int _number;
+};
+
+class ExplicitlyDefaulted {
+	ExplicitlyDefaulted() = default;
+	ExplicitlyDefaulted(ExplicitlyDefaulted const &) = default;
+	ExplicitlyDefaulted(ExplicitlyDefaulted &&) = default;
+	ExplicitlyDefaulted & operator=(ExplicitlyDefaulted const &) = default;
+	ExplicitlyDefaulted & operator=(ExplicitlyDefaulted &&) = default;
 private:
 	std::string _name;
 	int _number;
@@ -222,19 +233,15 @@ public:
 	Explicit(Explicit const & other) :
 		_name{other._name}, _number{other._number} {}
 	Explicit & operator=(Explicit const & other) {
-		if (this != &other) {
-			_name = other._name;
-			_number = other._number;
-		}
+		_name = other._name;
+		_number = other._number;
 		return *this;
 	}
 	Explicit(Explicit && other) :
 		_name{std::move(other._name)}, _number{std::move(other._number)} {}
 	Explicit & operator=(Explicit && other) {
-		if (this != &other) {
-			_name = std::move(other._name);
-			_number = std::move(other._number);
-		}
+		_name = std::move(other._name);
+		_number = std::move(other._number);
 		return *this;
 	};
 private:
@@ -292,9 +299,11 @@ Color Color::fromCmy(ValueType const cyan, ValueType const magenta, ValueType co
 //*********************************************************
 
 namespace luanics::utility {
-	Orator f(Orator o) {
-		return o;
-	}
+
+Orator makeOrator() {
+	Orator result{};
+	return result;
+}
 
 }
 
@@ -310,11 +319,11 @@ int main(int argc, char ** argv) {
 	//*********************************************************
 
 	{
-	Person a;     // a constructed
+	Person a;    // a constructed
 	{
 		Person b; // b constructed
 		a = b;    // b assigned to a
-	}             // b destructed
+	}            // b destructed
 	}
 
 	//*********************************************************
@@ -434,7 +443,10 @@ int main(int argc, char ** argv) {
 	// Copy elision
 	//*********************************************************
 
-
+	{
+		using namespace luanics::utility;
+		Orator o = makeOrator();
+	}
 
 	return 0;
 }

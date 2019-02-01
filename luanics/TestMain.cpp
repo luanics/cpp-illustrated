@@ -1,6 +1,6 @@
 #include "luanics/testing/Unit.hpp"
-#include "luanics/testing/unit/StandardReporter.hpp"
 #include "luanics/testing/core/ReporterAugmenter.hpp"
+#include "luanics/testing/unit/StandardReporter.hpp"
 
 #include <iostream>
 

@@ -18,9 +18,9 @@ TEST(ParameterizedConstruction) {
 	EXPECT_EQ(Suit::HEARTS, queenOfHearts.suit());
 }
 
-TEST(Comparison) {                     // test: "Comparison"
+TEST(Comparison) {
 	EXPECT_EQ(Card(Rank::ACE, Suit::SPADES), Card(Rank::ACE, Suit::SPADES));
-	EXPECT_NE(Card(Rank::ACE, Suit::SPADES), Card(Rank::QUEEN, Suit::HEARTS))
+	EXPECT_NE(Card(Rank::ACE, Suit::SPADES), Card(Rank::QUEEN, Suit::HEARTS));
 }
 
 TEST(Io) {
@@ -32,7 +32,9 @@ TEST(Io) {
 	std::istringstream{"JACK of DIAMONDS"} >> card;
 	EXPECT_EQ(Card(Rank::JACK, Suit::DIAMONDS), card);
 
-	EXPECT_THROW(std::istringstream{"JILL of HILLS"} >> card);
+	EXPECT_THROW(
+		std::istringstream{"JILL of HILLS"} >> card
+	);
 }
 
 END_TEST_SET(Card)

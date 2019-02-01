@@ -1,16 +1,18 @@
 #include "luanics/testing/Unit.hpp"
+#include "luanics/testing/core/ReporterAugmenter.hpp"
 #include "luanics/testing/unit/StandardReporter.hpp"
-#include "luanics/testing/unit/ReporterAdapter.hpp"
-
-using namespace luanics::testing::unit;
 
 #include <iostream>
 
+using namespace luanics::testing;
+
 int main() {
-	bool const isUsingColor = true;
+	bool const isUsingColor = false;
 	bool const isTerse = false;
-	StandardReporter reporter{&std::cout, isUsingColor, isTerse};
-	ReporterAdapter adapter{&reporter};
-	suiteInstance.run(adapter);
+
+	unit::StandardReporter reporter{&std::cout, isUsingColor, isTerse};
+	core::ReporterAugmenter augmenter{&reporter};
+	unit::suiteInstance().run(augmenter);
+
 	return 0;
 }

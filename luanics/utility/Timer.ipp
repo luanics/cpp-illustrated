@@ -15,8 +15,8 @@ void Timer<ClockT>::start() {
 }
 
 template <typename ClockT>
-Duration Timer<ClockT>::elapsed() const {
-	return std::chrono::duration_cast<Duration>(ClockT::now() - _start);
+typename Timer<ClockT>::DurationType Timer<ClockT>::elapsed() const {
+	return std::chrono::duration_cast<DurationType>(ClockT::now() - _start);
 }
 
 }  // namespace luanics::utility

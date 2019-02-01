@@ -26,6 +26,9 @@ create_executable(directives basics/Directives.cpp)
 create_executable(variables basics/Variables.cpp)
 create_executable(objects basics/Objects.cpp)
 
+# Metaprogramming
+create_executable(policies metaprogramming/Policies.cpp)
+
 # More Basics
 create_executable(integral_types more_basics/IntegralTypes.cpp)
 create_executable(floating_point_types more_basics/FloatingPointTypes.cpp)
@@ -46,6 +49,7 @@ create_executable(names not_so_basics/Names.cpp)
 create_executable(type_deduction not_so_basics/TypeDeduction.cpp)
 create_executable(logging not_so_basics/Logging.cpp)
 add_subdirectory(not_so_basics/names)
+add_subdirectory(not_so_basics/testing)
 
-# Metaprogramming
-create_executable(policies metaprogramming/Policies.cpp)
+# Performance
+create_executable(profiling performance/Profiling.cpp)

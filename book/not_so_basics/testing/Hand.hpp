@@ -21,14 +21,14 @@ public:
 	static constexpr int bestScore = 21;
 	static constexpr int bustScore = -1;
 
-	Hand();
+	Hand(); ///< Empty hand
 
 	void add(Card const & card);
 	void clear();
 	std::vector<Card> const & cards() const;
 
-	bool isBust() const;
-	int score() const; ///< @returns -1 if bust
+	bool isBust() const; ///< true if when score() passes 21
+	int score() const; ///< -1 if isBust()
 
 private:
 	void updateScore();

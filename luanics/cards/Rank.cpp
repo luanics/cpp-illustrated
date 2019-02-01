@@ -2,28 +2,32 @@
 #include "luanics/cards/Rank.hpp"
 #include "luanics/testing/Tutorial.hpp"
 
+#include <algorithm>
+#include <array>
 #include <iostream>
 #include <string>
 
+namespace luanics::cards {
+
 namespace {
 
-constexpr auto TWO_STRING = "TWO";
-constexpr auto THREE_STRING = "THREE";
-constexpr auto FOUR_STRING = "FOUR";
-constexpr auto FIVE_STRING = "FIVE";
-constexpr auto SIX_STRING = "SIX";
-constexpr auto SEVEN_STRING = "SEVEN";
-constexpr auto EIGHT_STRING = "EIGHT";
-constexpr auto NINE_STRING = "NINE";
-constexpr auto TEN_STRING = "TEN";
-constexpr auto JACK_STRING = "JACK";
-constexpr auto QUEEN_STRING = "QUEEN";
-constexpr auto KING_STRING = "KING";
-constexpr auto ACE_STRING = "ACE";
+std::array<std::pair<Rank, std::string>, NUM_RANKS> rankStringPairs{{
+	{Rank::TWO, "TWO"},
+	{Rank::THREE, "THREE"},
+	{Rank::FOUR, "FOUR"},
+	{Rank::FIVE, "FIVE"},
+	{Rank::SIX, "SIX"},
+	{Rank::SEVEN, "SEVEN"},
+	{Rank::EIGHT, "EIGHT"},
+	{Rank::NINE, "NINE"},
+	{Rank::TEN, "TEN"},
+	{Rank::JACK, "JACK"},
+	{Rank::QUEEN, "QUEEN"},
+	{Rank::KING, "KING"},
+	{Rank::ACE, "ACE"}
+}};
 
 }
-
-namespace luanics::cards {
 
 //*****************************************************************************
 // Queries
@@ -60,22 +64,12 @@ bool isFace(Rank const rank) {
 //*****************************************************************************
 
 std::ostream & operator<<(std::ostream & out, Rank const & rank) {
-	switch (rank) {
-		case Rank::TWO: out << TWO_STRING; break;
-		case Rank::THREE: out << THREE_STRING; break;
-		case Rank::FOUR: out << FOUR_STRING; break;
-		case Rank::FIVE: out << FIVE_STRING; break;
-		case Rank::SIX: out << SIX_STRING; break;
-		case Rank::SEVEN: out << SEVEN_STRING; break;
-		case Rank::EIGHT: out << EIGHT_STRING; break;
-		case Rank::NINE: out << NINE_STRING; break;
-		case Rank::TEN: out << TEN_STRING; break;
-		case Rank::JACK: out << JACK_STRING; break;
-		case Rank::QUEEN: out << QUEEN_STRING; break;
-		case Rank::KING: out << KING_STRING; break;
-		case Rank::ACE: out << ACE_STRING; break;
-		default: throw Error{"Invalid Rank value:" + std::to_string(static_cast<uint8_t>(rank))};
+	int const index = distance(Rank::TWO, rank, true);
+	bool const isInvalid = index < 0;
+	if (isInvalid) {
+		throw Error{"Invalid Rank value:" + std::to_string(static_cast<uint8_t>(rank))};
 	}
+	out << rankStringPairs[index].second;
 	return out;
 }
 
@@ -83,21 +77,16 @@ std::istream & operator>>(std::istream & in, Rank & rank) {
 	std::string s;
 	in >> s;
 
-	if (s == TWO_STRING) rank = Rank::TWO;
-	else if (s == THREE_STRING) rank = Rank::THREE;
-	else if (s == FOUR_STRING) rank = Rank::FOUR;
-	else if (s == FIVE_STRING) rank = Rank::FIVE;
-	else if (s == SIX_STRING) rank = Rank::SIX;
-	else if (s == SEVEN_STRING) rank = Rank::SEVEN;
-	else if (s == EIGHT_STRING) rank = Rank::EIGHT;
-	else if (s == NINE_STRING) rank = Rank::NINE;
-	else if (s == TEN_STRING) rank = Rank::TEN;
-	else if (s == JACK_STRING) rank = Rank::JACK;
-	else if (s == QUEEN_STRING) rank = Rank::QUEEN;
-	else if (s == KING_STRING) rank = Rank::KING;
-	else if (s == ACE_STRING) rank = Rank::ACE;
-	else throw Error("Invalid rank string:" + s);
-
+	auto const position = std::find_if(
+		rankStringPairs.begin(),
+		rankStringPairs.end(),
+		[&s](auto const & pair){return pair.second == s;}
+	);
+	bool const isFound = position != rankStringPairs.end();
+	if (not isFound) {
+		throw Error("Invalid rank string:" + s);
+	}
+	rank = position->first;
 	return in;
 }
 
