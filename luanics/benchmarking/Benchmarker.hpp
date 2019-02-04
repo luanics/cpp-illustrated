@@ -1,35 +1,35 @@
 #pragma once
 
-#include "luanics/benchmark/Result.hpp"
-#include "luanics/benchmark/Reporter.hpp"
+#include "luanics/benchmarking/Result.hpp"
+#include "luanics/benchmarking/Reporter.hpp"
 #include "luanics/logging/Contract.hpp"
-#include "luanics/performance/Statistics.hpp"
-#include "luanics/time/Timer.hpp"
+#include "luanics/statistics/Online.hpp"
+#include "luanics/utility/Timer.hpp"
 
 #include <vector>
 
-namespace luanics {
-namespace benchmark {
+namespace luanics::benchmarking {
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///
-/// @class Benchmark
+/// @class Benchmarker
 ///
 /// @brief Benchmark runner.
 ///
-/// First runs numWarmupSamplesTarget number of samples, unrecorded
-/// Second runs numSamplesTarget number of samples, recorded
+/// Samples taken in two stages:
+/// * first, runs numWarmupSamplesTarget number of samples, unrecorded
+/// * second, runs numSamplesTarget number of samples, recorded
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-class Benchmark {
+class Benchmarker {
 public:
 	using ParamType = std::size_t;
 
 	/// @pre numIterationsPerSample >= 1
 	/// @pre numRecordedSamples >= 1
-	Benchmark(
+	Benchmarker(
 		Reporter * reporter,
 		std::string name,
 		unsigned const numRecordedSamples,
@@ -49,20 +49,20 @@ public:
 		_numSamples{0},
 		_currentResult{}
 	{
-		PRECONDITION(numIterationsPerSample >= 1);
-		PRECONDITION(numRecordedSamples >= 1);
+		ENSURES(numIterationsPerSample >= 1);
+		ENSURES(numRecordedSamples >= 1);
 	}
 
 	ParamType param() const {
-		PRECONDITION(not _params.empty());
+		ENSURES(not _params.empty());
 		return _param;
 	}
 	unsigned totalNumIterations() const {
 		return _numSamples * _numIterationsPerSample;
 	}
 
-	template <typename SubjectT>
-	void run(SubjectT subject) {
+	template <typename BenchmarkT>
+	void run(BenchmarkT subject) {
 		if (_params.empty()) {
 			run(_name, subject, false);
 			run(_name, subject, true);
@@ -109,8 +109,8 @@ public:
 	}
 
 private:
-	template <typename SubjectT>
-	void run(std::string label, SubjectT subject, bool const isRecorded) {
+	template <typename BenchmarkT>
+	void run(std::string label, BenchmarkT subject, bool const isRecorded) {
 		_currentResult = Result{std::move(label), _numIterationsPerSample};
 		_numIterationsInThisSample = 0;
 		_numSamplesTarget = isRecorded ? _numRecordedSamples : _numUnrecordedSamples;
@@ -133,8 +133,6 @@ private:
 	unsigned _numSamplesTarget;
 	unsigned _numSamples;
 	Result _currentResult;
-};
-// class Benchmark
+}; // class Benchmarker
 
-} // namespace benchmark
-} // namespace luanics
+} // namespace luanics::benchmarking

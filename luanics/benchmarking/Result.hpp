@@ -1,13 +1,12 @@
 #pragma once
 
 #include "luanics/logging/Contract.hpp"
-#include "luanics/performance/Statistics.hpp"
+#include "luanics/statistics/Online.hpp"
 
 #include <cmath>
 #include <string>
 
-namespace luanics {
-namespace benchmark {
+namespace luanics::benchmarking {
 
 struct Result {
 	Result() = default;
@@ -32,7 +31,7 @@ struct Result {
 	bool hasNumItemsProcessed() const {return _numItemsProcessed > 0;}
 	double itemsPerSample() const {return _numItemsProcessed / numSamples();}
 	std::size_t numItemsProcessed() const {
-		PRECONDITION(hasNumItemsProcessed());
+		ENSURES(hasNumItemsProcessed());
 		return _numItemsProcessed;
 	}
 	bool hasInfo() const {return not _info.empty();}
@@ -55,9 +54,8 @@ struct Result {
 	std::size_t _numIterationsPerSample;
 	std::size_t _numItemsProcessed;
 	std::size_t _numBytesProcessed;
-	performance::Statistics _stats;
+	statistics::Online _stats;
 	std::string _info;
 }; // class Result
 
-} // namespace benchmark
-} // namespace luanics
+} // namespace luanics::benchmarking

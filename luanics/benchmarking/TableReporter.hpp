@@ -1,22 +1,22 @@
 #pragma once
 
-#include "luanics/benchmark/Reporter.hpp"
-#include "luanics/benchmark/Result.hpp"
-#include "luanics/performance/Statistics.hpp"
+#include "luanics/benchmarking/Reporter.hpp"
+#include "luanics/benchmarking/Result.hpp"
+#include "luanics/statistics/Online.hpp"
+#include "luanics/utility/Ansi.hpp"
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include "../utility/Colors.hpp"
 
-namespace luanics {
-namespace benchmark {
+namespace luanics::benchmarking {
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///
 /// @class TableReporter
 ///
-/// @brief Displays Benchmark Results in a table format
+/// @brief Displays Benchmarker results in a table format
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,48 +34,49 @@ public:
 	static constexpr unsigned BYTES_PER_SEC_COLUMN_WIDTH = 12;
 	static constexpr unsigned INFO_COLUMN_WIDTH = 12;
 	static constexpr unsigned TOTAL_WIDTH =
-			LABEL_COLUMN_WIDTH
-			+ NUM_SAMPLES_COLUMN_WIDTH
-			+ NUM_ITERATIONS_PER_SAMPLE_COLUMN_WIDTH
-			+ TOTAL_TIME_COLUMN_WIDTH
-			+ MSEC_PER_SAMPLE_MEAN_COLUMN_WIDTH
-			+ MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH
-			+ NSEC_PER_ITEM_MEAN_COLUMN_WIDTH
-			+ ITEMS_PER_SEC_COLUMN_WIDTH
-			+ BYTES_PER_SEC_COLUMN_WIDTH
-			+ INFO_COLUMN_WIDTH;
-
+		LABEL_COLUMN_WIDTH
+		+ NUM_SAMPLES_COLUMN_WIDTH
+		+ NUM_ITERATIONS_PER_SAMPLE_COLUMN_WIDTH
+		+ TOTAL_TIME_COLUMN_WIDTH
+		+ MSEC_PER_SAMPLE_MEAN_COLUMN_WIDTH
+		+ MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH
+		+ NSEC_PER_ITEM_MEAN_COLUMN_WIDTH
+		+ ITEMS_PER_SEC_COLUMN_WIDTH
+		+ BYTES_PER_SEC_COLUMN_WIDTH
+		+ INFO_COLUMN_WIDTH
+	;
 
 	TableReporter(std::ostream * out) : _out{out} {
 		printHeader();
 	}
 
 	void report(Result const & result) {
-		out() << color::green << std::left << std::setw(LABEL_COLUMN_WIDTH) << result._label;
-		out() << color::cyan << std::right << std::setw(NUM_SAMPLES_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numSamples();
-		out() << color::cyan << std::right << std::setw(NUM_ITERATIONS_PER_SAMPLE_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numIterationsPerSample();
-		out() << color::yellow << std::right << std::setw(TOTAL_TIME_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << result.totalTimeInSec();
-		out() << color::white << std::right << std::setw(MSEC_PER_SAMPLE_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << result.msecPerSampleMean();
-		out() << color::darkGray << std::right << std::setw(MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << result.msecPerSampleStdDev();
+		using namespace utility::ansi;
+		out() << GREEN << std::left << std::setw(LABEL_COLUMN_WIDTH) << result._label;
+		out() << CYAN << std::right << std::setw(NUM_SAMPLES_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numSamples();
+		out() << CYAN << std::right << std::setw(NUM_ITERATIONS_PER_SAMPLE_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numIterationsPerSample();
+		out() << BROWN << std::right << std::setw(TOTAL_TIME_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << result.totalTimeInSec();
+		out() << WHITE << std::right << std::setw(MSEC_PER_SAMPLE_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << result.msecPerSampleMean();
+		out() << DARK_GRAY << std::right << std::setw(MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << result.msecPerSampleStdDev();
 		if (result.hasNumItemsProcessed()) {
-			out() << color::white << std::right << std::setw(NSEC_PER_ITEM_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(1) << result.nsecPerItemMean();
+			out() << WHITE << std::right << std::setw(NSEC_PER_ITEM_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(1) << result.nsecPerItemMean();
 			double const megaItemsPerSecond = result.itemsPerSec() * 1.0e-6;
-			out() << color::white << std::right << std::setw(ITEMS_PER_SEC_COLUMN_WIDTH) << std::fixed << std::setprecision(2) << megaItemsPerSecond;
+			out() << WHITE << std::right << std::setw(ITEMS_PER_SEC_COLUMN_WIDTH) << std::fixed << std::setprecision(2) << megaItemsPerSecond;
 		}
 		else {
 			out() << std::string(ITEMS_PER_SEC_COLUMN_WIDTH, ' ');
 		}
 		double const megaBytesPerSecond = result.bytesPerSec() * 1.0e-6;
 		if (megaBytesPerSecond > 0.0) {
-			out() << color::white << std::right << std::setw(BYTES_PER_SEC_COLUMN_WIDTH) << std::fixed << std::setprecision(2) << megaBytesPerSecond;
+			out() << WHITE << std::right << std::setw(BYTES_PER_SEC_COLUMN_WIDTH) << std::fixed << std::setprecision(2) << megaBytesPerSecond;
 		}
 		else {
 			out() << std::string(BYTES_PER_SEC_COLUMN_WIDTH, ' ');
 		}
 		if (result.hasInfo()) {
-			out() << color::white << std::right << std::setw(INFO_COLUMN_WIDTH) << result.info();
+			out() << WHITE << std::right << std::setw(INFO_COLUMN_WIDTH) << result.info();
 		}
-		out() << color::reset << "\n";
+		out() << RESET << "\n";
 		out().flush();
 	}
 
@@ -102,5 +103,4 @@ private:
 
 }; // class TableReporter
 
-} // namespace benchmark
-} // namespace luanics
+} // namespace luanics::benchmarking
