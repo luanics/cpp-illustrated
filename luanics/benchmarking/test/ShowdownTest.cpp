@@ -13,8 +13,8 @@ namespace benchmarking {
 BEGIN_TEST_SET(Showdown)
 
 TEST(Tie) {
-	auto challenger = []{};
-	auto defender = []{};
+	auto challenger = []{std::this_thread::sleep_for(std::chrono::microseconds(50));};
+	auto defender = []{std::this_thread::sleep_for(std::chrono::microseconds(50));};
 	Showdown showdown{challenger, defender, 10, 100, false};
 	EXPECT_EQ(Winner::TIE, showdown.winner());
 }
