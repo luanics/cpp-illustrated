@@ -2,8 +2,6 @@
 # Library
 #*******************************************************************
 
-list(APPEND LuanicsLibSources benchmarking/Winner.cpp)
-
 list(APPEND LuanicsLibSources cards/Card.cpp)
 list(APPEND LuanicsLibSources cards/Rank.cpp)
 list(APPEND LuanicsLibSources cards/Suit.cpp)
@@ -48,7 +46,6 @@ set_target_properties(luanics PROPERTIES OUTPUT_NAME luanics${BUILD_POSTFIX})
 #*******************************************************************
 
 list(APPEND LuanicsTestSources benchmarking/test/BenchmarkerTest.cpp)
-list(APPEND LuanicsTestSources benchmarking/test/ShowdownTest.cpp)
 
 list(APPEND LuanicsTestSources cards/test/CardTest.cpp)
 list(APPEND LuanicsTestSources cards/test/RankTest.cpp)

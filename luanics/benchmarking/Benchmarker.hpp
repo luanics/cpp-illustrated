@@ -21,6 +21,9 @@ namespace luanics::benchmarking {
 /// * first, runs numWarmupSamplesTarget number of samples, unrecorded
 /// * second, runs numSamplesTarget number of samples, recorded
 ///
+/// Benchmarker is constructed with a Reporter so that it can give incremental
+///   feedback about the benchmark results.
+///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 class Benchmarker {
@@ -31,7 +34,6 @@ public:
 	/// @pre numRecordedSamples >= 1
 	Benchmarker(
 		Reporter * reporter,
-		std::string name,
 		unsigned const numRecordedSamples,
 		unsigned const numIterationsPerSample,
 		std::initializer_list<ParamType> params = {},
@@ -39,7 +41,6 @@ public:
 	) :
 		_reporter{reporter},
 		_timer{},
-		_name{std::move(name)},
 		_numIterationsPerSample{numIterationsPerSample},
 		_numRecordedSamples{numRecordedSamples},
 		_numUnrecordedSamples{numUnrecordedSamples},
@@ -49,12 +50,12 @@ public:
 		_numSamples{0},
 		_currentResult{}
 	{
-		ENSURES(numIterationsPerSample >= 1);
-		ENSURES(numRecordedSamples >= 1);
+		EXPECTS(numIterationsPerSample >= 1);
+		EXPECTS(numRecordedSamples >= 1);
 	}
 
 	ParamType param() const {
-		ENSURES(not _params.empty());
+		EXPECTS(not _params.empty());
 		return _param;
 	}
 	unsigned totalNumIterations() const {
@@ -62,17 +63,17 @@ public:
 	}
 
 	template <typename BenchmarkT>
-	void run(BenchmarkT subject) {
+	void run(std::string const & name, BenchmarkT benchmark) {
 		if (_params.empty()) {
-			run(_name, subject, false);
-			run(_name, subject, true);
+			run(name, benchmark, false);
+			run(name, benchmark, true);
 		}
 		else {
 			for (unsigned const param: _params) {
-				std::string label = _name + ":" + std::to_string(param);
+				std::string label = name + ":" + std::to_string(param);
 				_param = param;
-				run(label, subject, false);
-				run(label, subject, true);
+				run(label, benchmark, false);
+				run(label, benchmark, true);
 			}
 		}
 	}
@@ -110,20 +111,19 @@ public:
 
 private:
 	template <typename BenchmarkT>
-	void run(std::string label, BenchmarkT subject, bool const isRecorded) {
+	void run(std::string label, BenchmarkT benchmark, bool const isRecorded) {
 		_currentResult = Result{std::move(label), _numIterationsPerSample};
 		_numIterationsInThisSample = 0;
 		_numSamplesTarget = isRecorded ? _numRecordedSamples : _numUnrecordedSamples;
 		_numSamples = 0;
-		subject(*this);
+		benchmark(*this);
 		if (isRecorded) {
 			_reporter->report(_currentResult);
 		}
 	}
 
 	Reporter * _reporter;
-	Timer<> _timer;
-	std::string _name;
+	utility::Timer<> _timer;
 	unsigned _numIterationsPerSample;
 	unsigned _numRecordedSamples;
 	unsigned _numUnrecordedSamples;

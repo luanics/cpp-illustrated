@@ -52,4 +52,6 @@ add_subdirectory(not_so_basics/names)
 add_subdirectory(not_so_basics/testing)
 
 # Performance
+create_executable(cache_effects performance/CacheEffects.cpp)
+create_executable(custom_allocator performance/CustomAllocator.cpp)
 create_executable(profiling performance/Profiling.cpp)

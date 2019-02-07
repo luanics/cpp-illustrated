@@ -41,7 +41,7 @@
 	smallString "<" largeString
 
 #define LUANICS_EXPECT_LT_MESSAGE(smallString, smallValue, largeString, largeValue)\
-	std::string("in expression ") + LUANICS_EXPECT_LT_EXPRESSION(smallString, largeString) + ", " + luanics::string::stringify(smallValue) + " is not less than" + luanics::string::stringify(largeValue)
+	std::string("in expression ") + LUANICS_EXPECT_LT_EXPRESSION(smallString, largeString) + ", " + luanics::string::stringify(smallValue) + " is not less than " + luanics::string::stringify(largeValue)
 
 #define LUANICS_EXPECT_LE_EXPRESSION(smallString, largeString)\
 	smallString "<=" largeString
@@ -53,7 +53,7 @@
 	largeString ">" smallString
 
 #define LUANICS_EXPECT_GT_MESSAGE(largeString, largeValue, smallString, smallValue)\
-	std::string("in expression ") + LUANICS_EXPECT_GT_EXPRESSION(largeString, smallString) + ", " + luanics::string::stringify(largeValue) + " is not greater than" + luanics::string::stringify(smallValue)
+	std::string("in expression ") + LUANICS_EXPECT_GT_EXPRESSION(largeString, smallString) + ", " + luanics::string::stringify(largeValue) + " is not greater than " + luanics::string::stringify(smallValue)
 
 #define LUANICS_EXPECT_GE_EXPRESSION(largeString, smallString)\
 	largeString ">=" smallString
@@ -102,9 +102,8 @@
 	auto const smallValue = ((small)); \
 	auto const largeValue = ((large)); \
 	bool const isPassing = smallValue < largeValue; \
-	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, "hi dad"});
-
-//	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_LT_MESSAGE(#small, smallValue, #large, largeValue)});
+	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, LUANICS_EXPECT_LT_MESSAGE(#small, smallValue, #large, largeValue)});
+//	LUANICS_REPORTER.report(luanics::testing::core::Result{isPassing, __FILE__, __LINE__, "hi dad"});
 
 #define LUANICS_EXPECT_LE_BODY(small, large) \
 	auto const smallValue = ((small)); \

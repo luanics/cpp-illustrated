@@ -19,6 +19,7 @@ Online<ObservationT>::Online() :
 template <typename ObservationT>
 void Online<ObservationT>::record(ObservationType const observation) {
 	++_count;
+	_total += observation;
 	if (_count == 1) {
 		_min = observation;
 		_max = observation;
@@ -38,26 +39,31 @@ std::size_t Online<ObservationT>::count() const {
 }
 
 template <typename ObservationT>
+ObservationT Online<ObservationT>::total() const {
+	return _total;
+}
+
+template <typename ObservationT>
 ObservationT Online<ObservationT>::min() const {
-	ENSURES(count() > 0);
+	EXPECTS(count() > 0);
 	return _min;
 }
 
 template <typename ObservationT>
 ObservationT Online<ObservationT>::max() const {
-	ENSURES(count() > 0);
+	EXPECTS(count() > 0);
 	return _max;
 }
 
 template <typename ObservationT>
 double Online<ObservationT>::mean() const {
-	ENSURES(count() > 0);
+	EXPECTS(count() > 0);
 	return _mean;
 }
 
 template <typename ObservationT>
 double Online<ObservationT>::stdDev() const {
-	ENSURES(count() > 0);
+	EXPECTS(count() > 0);
 	if (_count == 1) return 0.0;
 	else return std::sqrt(_m2 / static_cast<double>(_count - 1));
 }

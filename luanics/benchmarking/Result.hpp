@@ -3,11 +3,21 @@
 #include "luanics/logging/Contract.hpp"
 #include "luanics/statistics/Online.hpp"
 
+#include <chrono>
 #include <cmath>
 #include <string>
 
 namespace luanics::benchmarking {
 
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+///
+/// @class Result
+///
+/// @brief Statistics gathered about a benchmark.
+///
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 struct Result {
 	Result() = default;
 	Result(
@@ -20,6 +30,7 @@ struct Result {
 		_numBytesProcessed{0},
 		_stats{} {}
 
+	std::string const & label() const {return _label;}
 	std::size_t numSamples() const {return _stats.count();}
 	std::size_t numIterationsPerSample() const {return _numIterationsPerSample;}
 	std::size_t totalNumIterations() const {return _numIterationsPerSample * numSamples();}
@@ -54,7 +65,8 @@ struct Result {
 	std::size_t _numIterationsPerSample;
 	std::size_t _numItemsProcessed;
 	std::size_t _numBytesProcessed;
-	statistics::Online _stats;
+	using ObservationType = std::chrono::nanoseconds::rep;
+	statistics::Online<ObservationType> _stats;
 	std::string _info;
 }; // class Result
 

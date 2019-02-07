@@ -16,11 +16,11 @@ namespace luanics::benchmarking {
 ///
 /// @class TableReporter
 ///
-/// @brief Displays Benchmarker results in a table format
+/// @brief TableDisplays benchmarking::Results in a table format
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-class TableReporter : public Reporter {
+class TableReporter final : public Reporter {
 public:
 	static constexpr unsigned LABEL_COLUMN_WIDTH = 20;
 	static constexpr unsigned NUM_SAMPLES_COLUMN_WIDTH = 12;
@@ -50,7 +50,7 @@ public:
 		printHeader();
 	}
 
-	void report(Result const & result) {
+	virtual void report(Result const & result) final {
 		using namespace utility::ansi;
 		out() << GREEN << std::left << std::setw(LABEL_COLUMN_WIDTH) << result._label;
 		out() << CYAN << std::right << std::setw(NUM_SAMPLES_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numSamples();

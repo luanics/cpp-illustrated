@@ -1,5 +1,5 @@
-#include "luanics/benchmark/Benchmark.hpp"
-#include "luanics/benchmark/TableReporter.hpp"
+#include "luanics/benchmarking/Benchmarker.hpp"
+#include "luanics/benchmarking/TableReporter.hpp"
 #include "luanics/memory/PoolAllocator.hpp"
 
 #include <iostream>
@@ -8,7 +8,7 @@
 #include <variant>
 #include <vector>
 
-using namespace luanics::benchmark;
+using namespace luanics::benchmarking;
 
 using Element = std::array<uint8_t, 64>;
 using StandardList = std::list<Element>;
@@ -18,11 +18,12 @@ using Vector = std::vector<Element>;
 int main(int argc, char ** argv) {
 	TableReporter reporter{&std::cout};
 
-	Benchmark standard{&reporter, "Standard", 5, 10, {1000000}, 1};
-	standard.run([](Benchmark & benchmark){
+	Benchmarker benchmarker{&reporter, 5, 10, {1000000}, 1};
+
+	benchmarker.run("List", [](Benchmarker & benchmarker){
 		StandardList container;
-		std::size_t const numItems = benchmark.param();
-		while (benchmark.isRunning()) {
+		std::size_t const numItems = benchmarker.param();
+		while (benchmarker.isRunning()) {
 			for (std::size_t i = 0; i < numItems; ++i) {
 				container.push_back(Element{});
 			}
@@ -30,15 +31,14 @@ int main(int argc, char ** argv) {
 				container.pop_back();
 			}
 		}
-		std::size_t numItemsProcessed = benchmark.totalNumIterations() * numItems;
-		benchmark.setNumItemsProcessed(numItemsProcessed);
+		std::size_t numItemsProcessed = benchmarker.totalNumIterations() * numItems;
+		benchmarker.setNumItemsProcessed(numItemsProcessed);
 	});
 
-	Benchmark custom{&reporter, "Custom", 5, 10, {1000000}, 1};
-	custom.run([](Benchmark & benchmark){
+	benchmarker.run("Custom", [](Benchmarker & benchmarker){
 		CustomList container;
-		std::size_t const numItems = benchmark.param();
-		while (benchmark.isRunning()) {
+		std::size_t const numItems = benchmarker.param();
+		while (benchmarker.isRunning()) {
 			for (std::size_t i = 0; i < numItems; ++i) {
 				container.push_back(Element{});
 			}
@@ -46,16 +46,15 @@ int main(int argc, char ** argv) {
 				container.pop_back();
 			}
 		}
-		std::size_t numItemsProcessed = benchmark.totalNumIterations() * numItems;
-		benchmark.setNumItemsProcessed(numItemsProcessed);
+		std::size_t numItemsProcessed = benchmarker.totalNumIterations() * numItems;
+		benchmarker.setNumItemsProcessed(numItemsProcessed);
 	});
 
-	Benchmark vector{&reporter, "Vector", 5, 10, {1000000}, 1};
-	vector.run([](Benchmark & benchmark){
+	benchmarker.run("Vector", [](Benchmarker & benchmarker){
 		Vector container;
-		std::size_t const numItems = benchmark.param();
+		std::size_t const numItems = benchmarker.param();
 		container.reserve(numItems);
-		while (benchmark.isRunning()) {
+		while (benchmarker.isRunning()) {
 			for (std::size_t i = 0; i < numItems; ++i) {
 				container.push_back(Element{});
 			}
@@ -63,8 +62,8 @@ int main(int argc, char ** argv) {
 				container.pop_back();
 			}
 		}
-		std::size_t numItemsProcessed = benchmark.totalNumIterations() * numItems;
-		benchmark.setNumItemsProcessed(numItemsProcessed);
+		std::size_t numItemsProcessed = benchmarker.totalNumIterations() * numItems;
+		benchmarker.setNumItemsProcessed(numItemsProcessed);
 	});
 
 	return 0;

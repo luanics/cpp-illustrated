@@ -1,12 +1,12 @@
-#include "luanics/benchmarking/TableReporter.hpp"
+#include "luanics/benchmarking/Reporter.hpp"
+#include "luanics/benchmarking/Benchmarker.hpp"
 
 #include <iostream>
-#include "../../luanics/benchmarking/Benchmarker.hpp"
 
-using namespace luanics::benchmark;
+using namespace luanics::benchmarking;
 
 int main(int argc, char ** argv) {
-	TableReporter reporter{&std::cout};
+	Reporter reporter{&std::cout};
 
 	constexpr int32_t numSteps = 64 * 1024 * 1024;
 	constexpr int32_t cacheLineSize = 64;
@@ -28,19 +28,19 @@ int main(int argc, char ** argv) {
 		1 << 23,
 		1 << 24
 	};
-	Benchmark benchmark{&reporter, "Cache", 1, 6, sizes, 1};
-	benchmark.run([](Benchmark & benchmark){
-		int32_t const sizeInBytes = benchmark.param();
+	Benchmarker benchmark{&reporter, 1, 6, sizes, 1};
+	benchmark.run("Cache", [](Benchmarker & benchmarker){
+		int32_t const sizeInBytes = benchmarker.param();
 		int32_t const numInts = sizeInBytes / sizeof(int32_t);
 		int32_t * numbers = new int32_t[numInts];
 		int32_t sizeMod = numInts - 1; // e.g., if array size is 8, sizeMod = 0b0111
-		while (benchmark.isRunning()) {
+		while (benchmarker.isRunning()) {
 			for (int32_t i = 0; i < numSteps; ++i) {
 				++(numbers[(i * numInt32PerCacheLine) & sizeMod]);
 			}
 		}
-		std::size_t numItemsProcessed = benchmark.totalNumIterations() * numSteps;
-		benchmark.setNumItemsProcessed(numItemsProcessed);
+		std::size_t numItemsProcessed = benchmarker.totalNumIterations() * numSteps;
+		benchmarker.setNumItemsProcessed(numItemsProcessed);
 	});
 
 	return 0;
