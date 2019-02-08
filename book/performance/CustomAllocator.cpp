@@ -22,7 +22,7 @@ int main(int argc, char ** argv) {
 
 	benchmarker.run("List", [](Benchmarker & benchmarker){
 		StandardList container;
-		std::size_t const numItems = benchmarker.param();
+		std::size_t const numItems = benchmarker.currentParam();
 		while (benchmarker.isRunning()) {
 			for (std::size_t i = 0; i < numItems; ++i) {
 				container.push_back(Element{});
@@ -37,7 +37,7 @@ int main(int argc, char ** argv) {
 
 	benchmarker.run("Custom", [](Benchmarker & benchmarker){
 		CustomList container;
-		std::size_t const numItems = benchmarker.param();
+		std::size_t const numItems = benchmarker.currentParam();
 		while (benchmarker.isRunning()) {
 			for (std::size_t i = 0; i < numItems; ++i) {
 				container.push_back(Element{});
@@ -52,7 +52,7 @@ int main(int argc, char ** argv) {
 
 	benchmarker.run("Vector", [](Benchmarker & benchmarker){
 		Vector container;
-		std::size_t const numItems = benchmarker.param();
+		std::size_t const numItems = benchmarker.currentParam();
 		container.reserve(numItems);
 		while (benchmarker.isRunning()) {
 			for (std::size_t i = 0; i < numItems; ++i) {

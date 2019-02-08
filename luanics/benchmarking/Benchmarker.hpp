@@ -1,14 +1,13 @@
 #pragma once
 
-#include "luanics/benchmarking/Result.hpp"
-#include "luanics/benchmarking/Reporter.hpp"
-#include "luanics/logging/Contract.hpp"
 #include "luanics/statistics/Online.hpp"
 #include "luanics/utility/Timer.hpp"
 
 #include <vector>
 
 namespace luanics::benchmarking {
+
+class Reporter;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,89 +37,27 @@ public:
 		unsigned const numIterationsPerSample,
 		std::initializer_list<ParamType> params = {},
 		unsigned const numUnrecordedSamples = 0
-	) :
-		_reporter{reporter},
-		_timer{},
-		_numIterationsPerSample{numIterationsPerSample},
-		_numRecordedSamples{numRecordedSamples},
-		_numUnrecordedSamples{numUnrecordedSamples},
-		_params{params.begin(), params.end()},
-		_param{0},
-		_numIterationsInThisSample{0},
-		_numSamples{0},
-		_currentResult{}
-	{
-		EXPECTS(numIterationsPerSample >= 1);
-		EXPECTS(numRecordedSamples >= 1);
-	}
+	);
 
-	ParamType param() const {
-		EXPECTS(not _params.empty());
-		return _param;
-	}
-	unsigned totalNumIterations() const {
-		return _numSamples * _numIterationsPerSample;
-	}
+	unsigned totalNumIterations() const;
 
 	template <typename BenchmarkT>
-	void run(std::string const & name, BenchmarkT benchmark) {
-		if (_params.empty()) {
-			run(name, benchmark, false);
-			run(name, benchmark, true);
-		}
-		else {
-			for (unsigned const param: _params) {
-				std::string label = name + ":" + std::to_string(param);
-				_param = param;
-				run(label, benchmark, false);
-				run(label, benchmark, true);
-			}
-		}
-	}
+	void run(std::string const & name, BenchmarkT benchmark);
 
-	bool isRunning() {
-		bool const isSampleFinished = _numIterationsInThisSample == _numIterationsPerSample;
-		if (isSampleFinished) {
-			auto elapsed = _timer.elapsed();
-			double const nanosecondsElapsed = std::chrono::nanoseconds(elapsed).count();
-			_numIterationsInThisSample = 0;
-			++_numSamples;
-			_currentResult._stats.record(nanosecondsElapsed);
-		}
-		bool const isBenchmarkFinished = _numSamples == _numSamplesTarget;
-		if (isBenchmarkFinished) {
-			return false;
-		}
-		bool const isSampleStarting = _numIterationsInThisSample == 0;
-		if (isSampleStarting) {
-			_timer.start();
-		}
-		++_numIterationsInThisSample;
-		return true;
-	}
-
-	void setNumItemsProcessed(std::size_t const count) {
-		_currentResult._numItemsProcessed = count;
-	}
-	void setNumBytesProcessed(std::size_t const count) {
-		_currentResult._numBytesProcessed = count;
-	}
-	void setInfo(std::string info) {
-		_currentResult._info = std::move(info);
-	}
+	////////////////////////////////////////////////////////
+	/// @name Benchmark interface
+	/// Can be called by the benchmark function from within run()
+	////////////////////////////////////////////////////////
+	//@{
+	ParamType currentParam() const;
+	bool isRunning(); ///< Must call after every benchmark sample
+	void setNumItemsProcessed(std::size_t const count);
+	void setInfo(std::string info);
+	//@}
 
 private:
 	template <typename BenchmarkT>
-	void run(std::string label, BenchmarkT benchmark, bool const isRecorded) {
-		_currentResult = Result{std::move(label), _numIterationsPerSample};
-		_numIterationsInThisSample = 0;
-		_numSamplesTarget = isRecorded ? _numRecordedSamples : _numUnrecordedSamples;
-		_numSamples = 0;
-		benchmark(*this);
-		if (isRecorded) {
-			_reporter->report(_currentResult);
-		}
-	}
+	void run(std::string label, BenchmarkT benchmark, bool const isRecorded);
 
 	Reporter * _reporter;
 	utility::Timer<> _timer;
@@ -128,11 +65,17 @@ private:
 	unsigned _numRecordedSamples;
 	unsigned _numUnrecordedSamples;
 	std::vector<ParamType> _params;
-	ParamType _param;
+	ParamType _currentParam;
 	unsigned _numIterationsInThisSample;
 	unsigned _numSamplesTarget;
 	unsigned _numSamples;
-	Result _currentResult;
+	using ObservationType = std::chrono::nanoseconds::rep;
+	using StatsType = statistics::Online<ObservationType>;
+	StatsType _currentStats;
+	std::size_t _currentNumItemsProcessed;
+	std::string _currentInfo;
 }; // class Benchmarker
 
 } // namespace luanics::benchmarking
+
+#include "luanics/benchmarking/Benchmarker.ipp"

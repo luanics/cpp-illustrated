@@ -1,4 +1,5 @@
 #include "luanics/benchmarking/Benchmarker.hpp"
+#include "luanics/benchmarking/Helpers.hpp"
 #include "luanics/benchmarking/test/RecordingReporter.hpp"
 #include "luanics/testing/Unit.hpp"
 
@@ -18,21 +19,7 @@ TEST(EmptyBenchmark) {
 	Result const & result = position->second;
 	EXPECT_EQ(30, result.numSamples());
 	EXPECT_EQ(10000, result.numIterationsPerSample());
-	EXPECT_GT(0.1, result.totalTimeInSec());
-}
-
-void benchmarker(Benchmarker & benchmarker) {
-	int const value = 42;
-	while (benchmarker.isRunning()) {
-		std::vector<int> numbers;
-		for (unsigned i = 0; i < benchmarker.param(); ++i) {
-			numbers.push_back(value);
-		}
-	}
-	std::size_t numItemsProcessed = benchmarker.totalNumIterations() * benchmarker.param();
-	std::size_t numBytesProcessed = numItemsProcessed * sizeof(int);
-	benchmarker.setNumItemsProcessed(numItemsProcessed);
-	benchmarker.setNumBytesProcessed(numBytesProcessed);
+	EXPECT_GT(0.1, secTotalFor(result));
 }
 
 TEST(100x10) {

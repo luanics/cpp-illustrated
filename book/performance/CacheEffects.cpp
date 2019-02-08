@@ -1,12 +1,12 @@
-#include "luanics/benchmarking/Reporter.hpp"
 #include "luanics/benchmarking/Benchmarker.hpp"
+#include "luanics/benchmarking/TableReporter.hpp"
 
 #include <iostream>
 
 using namespace luanics::benchmarking;
 
 int main(int argc, char ** argv) {
-	Reporter reporter{&std::cout};
+	TableReporter reporter{&std::cout};
 
 	constexpr int32_t numSteps = 64 * 1024 * 1024;
 	constexpr int32_t cacheLineSize = 64;
@@ -30,7 +30,7 @@ int main(int argc, char ** argv) {
 	};
 	Benchmarker benchmark{&reporter, 1, 6, sizes, 1};
 	benchmark.run("Cache", [](Benchmarker & benchmarker){
-		int32_t const sizeInBytes = benchmarker.param();
+		int32_t const sizeInBytes = benchmarker.currentParam();
 		int32_t const numInts = sizeInBytes / sizeof(int32_t);
 		int32_t * numbers = new int32_t[numInts];
 		int32_t sizeMod = numInts - 1; // e.g., if array size is 8, sizeMod = 0b0111
