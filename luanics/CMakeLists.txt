@@ -6,6 +6,7 @@ list(APPEND LuanicsLibSources benchmarking/Helpers.cpp)
 list(APPEND LuanicsLibSources benchmarking/TableReporter.cpp)
 
 list(APPEND LuanicsLibSources cards/Card.cpp)
+list(APPEND LuanicsLibSources cards/Deck.cpp)
 list(APPEND LuanicsLibSources cards/Rank.cpp)
 list(APPEND LuanicsLibSources cards/Suit.cpp)
 

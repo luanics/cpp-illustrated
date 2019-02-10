@@ -27,8 +27,7 @@ struct Result {
 		double const nsecTotal,
 		double const nsecPerSampleMean,
 		double const nsecPerSampleStdDev,
-		std::size_t const numItemsProcessed = {},
-		std::string info = {}
+		std::size_t const numItemsProcessed = {}
 	) :
 		_label{std::move(label)},
 		_numSamples{numSamples},
@@ -54,9 +53,6 @@ struct Result {
 		return _numItemsProcessed;
 	}
 
-	bool hasInfo() const {return not _info.empty();}
-	std::string const & info() const {return _info;}
-
 private:
 	std::string _label;
 	std::size_t _numSamples;
@@ -65,7 +61,6 @@ private:
 	double _nsecPerSampleMean;
 	double _nsecPerSampleStdDev;
 	std::size_t _numItemsProcessed;
-	std::string _info;
 }; // class Result
 
 } // namespace luanics::benchmarking

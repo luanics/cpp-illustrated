@@ -17,7 +17,6 @@ constexpr unsigned MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH = 10;
 constexpr unsigned NSEC_PER_ITEM_MEAN_COLUMN_WIDTH = 12;
 constexpr unsigned ITEMS_PER_SAMPLE_COLUMN_WIDTH = 12;
 constexpr unsigned ITEMS_PER_SEC_COLUMN_WIDTH = 12;
-constexpr unsigned INFO_COLUMN_WIDTH = 12;
 constexpr unsigned TOTAL_WIDTH =
 	LABEL_COLUMN_WIDTH
 	+ NUM_SAMPLES_COLUMN_WIDTH
@@ -27,7 +26,6 @@ constexpr unsigned TOTAL_WIDTH =
 	+ MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH
 	+ NSEC_PER_ITEM_MEAN_COLUMN_WIDTH
 	+ ITEMS_PER_SEC_COLUMN_WIDTH
-	+ INFO_COLUMN_WIDTH
 ;
 
 TableReporter::TableReporter(std::ostream * out) : _out{out} {
@@ -50,9 +48,6 @@ void TableReporter::report(Result const & result) {
 	else {
 		out() << std::string(ITEMS_PER_SEC_COLUMN_WIDTH, ' ');
 	}
-	if (result.hasInfo()) {
-		out() << WHITE << std::right << std::setw(INFO_COLUMN_WIDTH) << result.info();
-	}
 	out() << RESET << "\n";
 	out().flush();
 }
@@ -68,7 +63,6 @@ void TableReporter::printHeader() {
 	out() << std::right << std::setw(MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH) << "+/-";
 	out() << std::right << std::setw(NSEC_PER_ITEM_MEAN_COLUMN_WIDTH) << "nsec/Item";
 	out() << std::right << std::setw(ITEMS_PER_SEC_COLUMN_WIDTH) << "MItems/sec";
-	out() << std::right << std::setw(INFO_COLUMN_WIDTH) << "Info";
 	out() << "\n";
 	out() << std::string(TOTAL_WIDTH, '-');
 	out() << std::endl;

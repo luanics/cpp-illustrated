@@ -8,6 +8,9 @@ using namespace luanics::benchmarking;
 int main(int argc, char ** argv) {
 	TableReporter reporter{&std::cout};
 
+	constexpr unsigned numRecordedSamples = 4;
+	constexpr unsigned numUnrecordedSamples = 1;
+	constexpr unsigned numIterationsPerSample = 6;
 	constexpr int32_t numSteps = 64 * 1024 * 1024;
 	constexpr int32_t cacheLineSize = 64;
 	constexpr int32_t numInt32PerCacheLine = cacheLineSize / sizeof(int32_t); // = 16
@@ -28,7 +31,13 @@ int main(int argc, char ** argv) {
 		1 << 23,
 		1 << 24
 	};
-	Benchmarker benchmark{&reporter, 1, 6, sizes, 1};
+	Benchmarker benchmark{
+		&reporter,
+		numRecordedSamples,
+		numIterationsPerSample,
+		sizes,
+		numUnrecordedSamples
+	};
 	benchmark.run("Cache", [](Benchmarker & benchmarker){
 		int32_t const sizeInBytes = benchmarker.currentParam();
 		int32_t const numInts = sizeInBytes / sizeof(int32_t);

@@ -24,8 +24,7 @@ Benchmarker::Benchmarker(
 	_numSamplesTarget{},
 	_numSamples{},
 	_currentStats{},
-	_currentNumItemsProcessed{},
-	_currentInfo{}
+	_currentNumItemsProcessed{}
 {
 	EXPECTS(numIterationsPerSample >= 1);
 	EXPECTS(numRecordedSamples >= 1);
@@ -81,10 +80,6 @@ inline void Benchmarker::setNumItemsProcessed(std::size_t const count) {
 	_currentNumItemsProcessed = count;
 }
 
-inline void Benchmarker::setInfo(std::string info) {
-	_currentInfo = std::move(info);
-}
-
 template <typename BenchmarkT>
 void Benchmarker::run(std::string label, BenchmarkT benchmark, bool const isRecorded) {
 	_numIterationsInThisSample = 0;
@@ -92,7 +87,6 @@ void Benchmarker::run(std::string label, BenchmarkT benchmark, bool const isReco
 	_numSamples = 0;
 	_currentStats = StatsType{};
 	_currentNumItemsProcessed = 0;
-	_currentInfo.clear();
 	benchmark(*this);
 	if (isRecorded) {
 		_reporter->report(Result{
@@ -102,8 +96,7 @@ void Benchmarker::run(std::string label, BenchmarkT benchmark, bool const isReco
 			static_cast<double>(_currentStats.total()),
 			_currentStats.mean(),
 			_currentStats.stdDev(),
-			_currentNumItemsProcessed,
-			_currentInfo
+			_currentNumItemsProcessed
 		});
 	}
 }

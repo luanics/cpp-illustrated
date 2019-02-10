@@ -6,8 +6,7 @@
 #include <random>
 #include <vector>
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,5 +42,4 @@ private:
 	std::vector<Card> _cards;
 }; // class Deck
 
-}  // namespace cards
-}  // namespace luanics
+} // namespace luanics::cards

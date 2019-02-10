@@ -52,7 +52,6 @@ public:
 	ParamType currentParam() const;
 	bool isRunning(); ///< Must call after every benchmark sample
 	void setNumItemsProcessed(std::size_t const count);
-	void setInfo(std::string info);
 	//@}
 
 private:
@@ -73,7 +72,6 @@ private:
 	using StatsType = statistics::Online<ObservationType>;
 	StatsType _currentStats;
 	std::size_t _currentNumItemsProcessed;
-	std::string _currentInfo;
 }; // class Benchmarker
 
 } // namespace luanics::benchmarking

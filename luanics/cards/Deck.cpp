@@ -5,8 +5,7 @@
 #include <algorithm>
 #include <iostream>
 
-namespace luanics {
-namespace cards {
+namespace luanics::cards {
 
 namespace {
 
@@ -18,7 +17,7 @@ std::vector<luanics::cards::Card> unshuffledCards() {
 		Rank const rank = static_cast<Rank>(rankIndex);
 		for (size_t suitIndex = 0; suitIndex < NUM_SUITS; ++suitIndex) {
 			Suit const suit = static_cast<Suit>(suitIndex);
-			CREATE ANSWER(result.push_back(Card(rank, suit));)
+			CREATE
 		}
 	}
 	return result;
@@ -37,11 +36,11 @@ Deck::Deck(std::vector<Card> cards) :
 {}
 
 bool Deck::isEmpty() const {
-	FIX(RIGHT(return size() == 0;)WRONG(return false;))
+	FIX(return false;)
 }
 
 size_t Deck::size() const {
-	FIX(RIGHT(return _cards.size();)WRONG(return 0;))
+	FIX(return 0;)
 }
 
 void Deck::shuffle() {
@@ -56,12 +55,7 @@ Card Deck::draw() {
 	if (isEmpty()) {
 		throw Error("draw() called on empty deck.");
 	}
-	CREATE ANSWER(
-	Card result = _cards.back();
-	_cards.pop_back();
-	return result;
-	)
+	CREATE
 }
 
-}  // namespace cards
-}  // namespace luanics
+} // namespace luanics::cards
