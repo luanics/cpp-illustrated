@@ -2,7 +2,7 @@
 
 #include "luanics/profiling/Node.hpp"
 #include "luanics/profiling/NodeManager.hpp"
-#include "luanics/utility/Ansi.hpp"
+#include "luanics/utility/Streams.hpp"
 
 #include <iostream>
 #include <iomanip>
@@ -66,15 +66,15 @@ private:
 	}
 
 	void printHeader() {
-		using namespace utility::ansi;
-		*_out << WHITE;
+		using namespace utility::streams;
+		*_out << white;
 		*_out << std::left << std::setw(nodeColumnWidth) << "Node";
 		*_out << std::right << std::setw(relativeColumnWidth) << "Relative(%)";
 		*_out << std::right << std::setw(meanColumnWidth) << "Mean(nsec)";
 		*_out << std::right << std::setw(countColumnWidth) << "Count";
 		*_out << std::right << std::setw(minColumnWidth) << "Min(nsec)";
 		*_out << std::right << std::setw(maxColumnWidth) << "Max(nsec)";
-		*_out << RESET;
+		*_out << plain;
 		*_out << std::endl;
 	}
 	void printRow(std::string const & nodeName, NodeType const & node, bool const isRoot) {

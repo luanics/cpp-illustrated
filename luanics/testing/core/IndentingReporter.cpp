@@ -4,7 +4,6 @@
 #include "luanics/testing/core/IndentingReporter.hpp"
 #include "luanics/testing/core/Log.hpp"
 #include "luanics/testing/core/Result.hpp"
-#include "luanics/utility/Ansi.hpp"
 #include "luanics/utility/Paths.hpp"
 #include "luanics/utility/Streams.hpp"
 
@@ -23,7 +22,6 @@ std::string const INDENT = "   ";
 
 IndentingReporter::IndentingReporter(
 	std::ostream * out,
-	bool const isUsingColor,
 	bool const isVerbose
 ) :
 	_isVerbose{isVerbose},
@@ -38,12 +36,7 @@ IndentingReporter::IndentingReporter(
 	_failIntro{},
 	_errorIntro{}
 {
-	if (isUsingColor) {
-		setupUsingAnsiColors();
-	}
-	else {
-		setupUsingNoColors();
-	}
+	setup();
 }
 
 bool IndentingReporter::startReportOn(Component const & component, unsigned const depth) {
@@ -76,21 +69,29 @@ void IndentingReporter::report(core::Result const & result) {
 	storeComposedLine();
 }
 
-void IndentingReporter::setupUsingAnsiColors() {
-	using namespace utility::ansi;
-	_noneIntro = INTRO_BEGIN_DELIMITER + DARK_GRAY + "NONE " + RESET + INTRO_END_DELIMITER;
-	_logIntro = INTRO_BEGIN_DELIMITER + LIGHT_GRAY + "LOG  " + RESET + INTRO_END_DELIMITER;
-	_passIntro = INTRO_BEGIN_DELIMITER + GREEN + "PASS " + RESET + INTRO_END_DELIMITER;
-	_failIntro = INTRO_BEGIN_DELIMITER + RED + "FAIL " + RESET + INTRO_END_DELIMITER;
-	_errorIntro = INTRO_BEGIN_DELIMITER + BOLD_RED + "ERROR" + RESET + INTRO_END_DELIMITER;
-}
+void IndentingReporter::setup() {
+	using namespace utility::streams;
 
-void IndentingReporter::setupUsingNoColors() {
-	_noneIntro = INTRO_BEGIN_DELIMITER + "NONE " + INTRO_END_DELIMITER;
-	_logIntro = INTRO_BEGIN_DELIMITER + "LOG  " + INTRO_END_DELIMITER;
-	_passIntro = INTRO_BEGIN_DELIMITER + "PASS " + INTRO_END_DELIMITER;
-	_failIntro = INTRO_BEGIN_DELIMITER + "FAIL " + INTRO_END_DELIMITER;
-	_errorIntro = INTRO_BEGIN_DELIMITER + "ERROR" + INTRO_END_DELIMITER;
+	std::ostringstream out;
+
+	out << INTRO_BEGIN_DELIMITER << darkGray << "NONE " << plain << INTRO_END_DELIMITER;
+	_noneIntro = out.str();
+	reset(out);
+
+	out << INTRO_BEGIN_DELIMITER << lightGray << "LOG  " << plain << INTRO_END_DELIMITER;
+	_logIntro = out.str();
+	reset(out);
+
+	out << INTRO_BEGIN_DELIMITER << green << "PASS " << plain << INTRO_END_DELIMITER;
+	_passIntro = out.str();
+	reset(out);
+
+	out << INTRO_BEGIN_DELIMITER << red << "FAIL " << plain << INTRO_END_DELIMITER;
+	_failIntro = out.str();
+	reset(out);
+
+	out << INTRO_BEGIN_DELIMITER << boldRed << "ERROR" << plain << INTRO_END_DELIMITER;
+	_errorIntro = out.str();
 }
 
 void IndentingReporter::composeLine(std::string const & name, core::Outcome const outcome) {

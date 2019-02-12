@@ -54,9 +54,6 @@ private:
 	bool startTest(std::string const & name);
 	void finishTest(std::string const & name, core::Outcome const outcome);
 
-	void setupUsingAnsiColors();
-	void setupUsingNoColors();
-
 	size_t numTestsPassed() const;
 	size_t numTestsFailed() const;
 
@@ -70,15 +67,6 @@ private:
 	std::string _testSetName;
 	size_t _globalTestCount;
 	size_t _localTestCount;
-	std::string _introBar;
-	std::string _testSuiteBar;
-	std::string _testSetBar;
-	std::string _logBar;
-	std::string _runBar;
-	std::string _okBar;
-	std::string _passBar;
-	std::string _failBar;
-	std::string _failedTestBullet;
 	std::vector<std::string> _failedTests;
 }; // class StandardReporter
 

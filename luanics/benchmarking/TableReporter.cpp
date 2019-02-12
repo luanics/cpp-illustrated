@@ -2,7 +2,7 @@
 
 #include "luanics/benchmarking/Helpers.hpp"
 #include "luanics/benchmarking/Result.hpp"
-#include "luanics/utility/Ansi.hpp"
+#include "luanics/utility/Streams.hpp"
 
 #include <iomanip>
 
@@ -33,22 +33,22 @@ TableReporter::TableReporter(std::ostream * out) : _out{out} {
 }
 
 void TableReporter::report(Result const & result) {
-	using namespace utility::ansi;
-	out() << GREEN << std::left << std::setw(LABEL_COLUMN_WIDTH) << result.label();
-	out() << CYAN << std::right << std::setw(NUM_SAMPLES_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numSamples();
-	out() << CYAN << std::right << std::setw(NUM_ITERATIONS_PER_SAMPLE_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numIterationsPerSample();
-	out() << BROWN << std::right << std::setw(TOTAL_TIME_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << secTotalFor(result);
-	out() << WHITE << std::right << std::setw(MSEC_PER_SAMPLE_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << msecPerSampleMeanFor(result);
-	out() << DARK_GRAY << std::right << std::setw(MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << msecPerSampleStdDevFor(result);
+	using namespace utility::streams;
+	out() << green << std::left << std::setw(LABEL_COLUMN_WIDTH) << result.label();
+	out() << cyan << std::right << std::setw(NUM_SAMPLES_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numSamples();
+	out() << cyan << std::right << std::setw(NUM_ITERATIONS_PER_SAMPLE_COLUMN_WIDTH) << std::fixed << std::setprecision(0) << result.numIterationsPerSample();
+	out() << brown << std::right << std::setw(TOTAL_TIME_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << secTotalFor(result);
+	out() << white << std::right << std::setw(MSEC_PER_SAMPLE_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << msecPerSampleMeanFor(result);
+	out() << darkGray << std::right << std::setw(MSEC_PER_SAMPLE_STDDEV_COLUMN_WIDTH) << std::fixed << std::setprecision(3) << msecPerSampleStdDevFor(result);
 	if (result.hasNumItemsProcessed()) {
-		out() << WHITE << std::right << std::setw(NSEC_PER_ITEM_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(1) << nsecPerItemMeanFor(result);
+		out() << white << std::right << std::setw(NSEC_PER_ITEM_MEAN_COLUMN_WIDTH) << std::fixed << std::setprecision(1) << nsecPerItemMeanFor(result);
 		double const megaItemsPerSecond = itemsPerSecFor(result) * 1.0e-6;
-		out() << WHITE << std::right << std::setw(ITEMS_PER_SEC_COLUMN_WIDTH) << std::fixed << std::setprecision(2) << megaItemsPerSecond;
+		out() << white << std::right << std::setw(ITEMS_PER_SEC_COLUMN_WIDTH) << std::fixed << std::setprecision(2) << megaItemsPerSecond;
 	}
 	else {
 		out() << std::string(ITEMS_PER_SEC_COLUMN_WIDTH, ' ');
 	}
-	out() << RESET << "\n";
+	out() << plain << "\n";
 	out().flush();
 }
 

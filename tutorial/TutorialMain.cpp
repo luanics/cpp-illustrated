@@ -2,6 +2,7 @@
 #include "luanics/testing/core/IndentingReporter.hpp"
 #include "luanics/testing/core/ReporterAugmenter.hpp"
 #include "luanics/testing/Tutorial.hpp"
+#include "luanics/utility/Streams.hpp"
 
 #include <algorithm>
 #include <cstring>
@@ -83,7 +84,8 @@ int main(int argc, char * argv[]) {
 	// Run tutorial
 	//*********************************************************
 
-	luanics::testing::core::IndentingReporter unfiltered(&cout, isUsingColor, isShowingHints);
+	luanics::utility::streams::setIsUsingAnsiCodes(isUsingColor);
+	luanics::testing::core::IndentingReporter unfiltered(&cout, isShowingHints);
 	luanics::testing::core::FirstFailFilter filtered(&unfiltered);
 	using luanics::testing::core::AugmentedReporter;
 	AugmentedReporter * reporter = isUsingFirstFail ? static_cast<AugmentedReporter*>(&filtered) : static_cast<AugmentedReporter*>(&unfiltered);

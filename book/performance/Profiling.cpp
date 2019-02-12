@@ -35,7 +35,7 @@ int main() {
 
 	for (int i = 0; i < 1000; ++i) {
 		auto randoms = generateRandoms();
-		auto sum = sumRandoms(randoms);
+		[[maybe_unused]] auto sum = sumRandoms(randoms);
 	}
 
 	PROFILE_END()

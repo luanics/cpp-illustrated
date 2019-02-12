@@ -22,7 +22,6 @@ class IndentingReporter : public AugmentedReporter {
 public:
 	IndentingReporter(
 		std::ostream * out,
-		bool const isUsingColor = true,
 		bool const isVerbose = true
 	);
 
@@ -44,8 +43,7 @@ private:
 	void pushLineIndex();
 	unsigned popLineIndex();
 
-	void setupUsingAnsiColors();
-	void setupUsingNoColors();
+	void setup();
 
 	void composeLine(std::string const & name, core::Outcome const outcome);
 	void composeLine(Error const & error);
