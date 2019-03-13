@@ -1,3 +1,4 @@
+#include "luanics/memory/Checking.hpp"
 #include "luanics/testing/Unit.hpp"
 #include "luanics/testing/core/ReporterAugmenter.hpp"
 #include "luanics/testing/unit/StandardReporter.hpp"

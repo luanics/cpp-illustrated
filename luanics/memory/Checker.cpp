@@ -34,16 +34,17 @@ void Checker::deallocation(void * ptr) {
 }
 
 void Checker::reportTo(std::ostream & out) {
-	out << RESET;
+	using namespace utility::streams;
+	out << plain;
 	bool const isBalanced = _state.numAllocations == _state.numDeallocations;
-	out << BOLD_GREEN << "[==========]" << RESET << std::endl;
-	out << BOLD_GREEN << "[" << BOLD_BLUE << "  MEMORY  " << BOLD_GREEN << "]" << RESET << std::endl;
-	out << BOLD_GREEN << "[==========]" << RESET << std::endl;
+	out << boldGreen << "[==========]" << plain << std::endl;
+	out << boldGreen << "[" << boldBlue << "  MEMORY  " << boldGreen << "]" << plain << std::endl;
+	out << boldGreen << "[==========]" << plain << std::endl;
 	if (isBalanced) {
-		out << BOLD_GREEN << "[  PASSED  ] " << RESET;
+		out << boldGreen << "[  PASSED  ] " << plain;
 	}
 	else {
-		out << BOLD_RED << "[  FAILED  ] " << RESET;
+		out << boldRed << "[  FAILED  ] " << plain;
 	}
 	// imbue/locale will use "new" and "delete", so save before going further.
 	auto currentState = _state;

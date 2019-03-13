@@ -32,7 +32,7 @@ int main() {
 //	vitality = (health = 2 + 2;); // ERROR - "health=2+2;" is a statement
 
 	int wisdom = 12;    // "=" is initialization since wisdom is being defined
-	wisdom = 13;       // "=" is assignment since wisdom already defined
+	wisdom = 13;        // "=" is assignment since wisdom already defined
 	if (wisdom == 18) { // "==" is comparison
 		std::cout << "sage" << std::endl;
 	}
@@ -67,10 +67,10 @@ int main() {
 	if (isAttacked)
 		health -= 5;         // statement
 	if (health <= 0)
-	{                        // com
+	{                       // com
 		adventurer.expire(); //    pound
 		game.end();          //          state
-	}                        //               ment
+	}                       //               ment
 
 	//*********************************************************
 	// Control Flow Statements

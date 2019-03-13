@@ -79,9 +79,22 @@ int main(int argc, char ** argv) {
 		assert(z1 == 6);
 	}
 
-	//*******************************************************************
+	//*********************************************************
+	// Conversion
+	//*********************************************************
+
+	{
+		auto a = 1 + 1.0; // int converted to float
+		static_assert(std::is_same_v<decltype(a), double>);
+
+		static_assert(std::is_same_v<std::common_type_t<double, float>, double>);
+		static_assert(std::is_same_v<std::common_type_t<float, unsigned>, float>);
+		static_assert(std::is_same_v<std::common_type_t<unsigned, int>, unsigned>);
+	}
+
+	//*********************************************************
 	// Logical operators
-	//*******************************************************************
+	//*********************************************************
 
 	{
 		bool b1{false};
@@ -213,7 +226,9 @@ int main(int argc, char ** argv) {
 		double a = 1.0;
 		int b = 1;
 		auto c = true ? a : b;
+//		auto d = true ? a : "b";
 		static_assert(std::is_same_v<std::common_type_t<decltype(a), decltype(b)>, decltype(c)>);
+		static_assert(std::is_same_v<double, decltype(c)>);
 	}
 
 	{

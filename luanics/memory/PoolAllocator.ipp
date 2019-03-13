@@ -47,7 +47,7 @@ PoolAllocator<T, BlockSizeV>::~PoolAllocator() {
 
 template <typename T, std::size_t BlockSizeV>
 T * PoolAllocator<T, BlockSizeV>::allocate(std::size_t n) {
-	ENSURES(n == 1, n);
+	EXPECTS(n == 1, n);
 	bool const have_space_in_free_list = _free_list_head != nullptr;
 	if (have_space_in_free_list) {
 		T * result = reinterpret_cast<T*>(_free_list_head);
@@ -67,7 +67,7 @@ T * PoolAllocator<T, BlockSizeV>::allocate(std::size_t n) {
 
 template <typename T, std::size_t BlockSizeV>
 void PoolAllocator<T, BlockSizeV>::deallocate(T * p, std::size_t n) {
-	ENSURES(n == 1, n);
+	EXPECTS(n == 1, n);
 	Slot * freed = reinterpret_cast<Slot *>(p);
 	freed->next = _free_list_head;
 	_free_list_head = freed;

@@ -21,6 +21,9 @@ list(APPEND LuanicsLibSources logging/Logger.cpp)
 list(APPEND LuanicsLibSources logging/SimpleSink.cpp)
 list(APPEND LuanicsLibSources logging/SimpleSource.cpp)
 
+list(APPEND LuanicsLibSources memory/Checker.cpp)
+list(APPEND LuanicsLibSources memory/Checking.cpp)
+
 list(APPEND LuanicsLibSources profiling/GlobalNodeManager.cpp)
 
 list(APPEND LuanicsLibSources testing/core/AugmentedReporterDecorator.cpp)
@@ -65,6 +68,8 @@ list(APPEND LuanicsTestSources logging/test/SimpleSourceTest.cpp)
 list(APPEND LuanicsTestSources logging/test/TupleRecordTest.cpp)
 
 list(APPEND LuanicsTestSources math/test/OperationsTest.cpp)
+
+list(APPEND LuanicsTestSources memory/test/PoolAllocatorTest.cpp)
 
 list(APPEND LuanicsTestSources meta/test/DetectionTest.cpp)
 list(APPEND LuanicsTestSources meta/test/TypeTraitsTest.cpp)
