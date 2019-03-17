@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 2.8)
 project(cpp-illustrated)
 
 # Put our targets in top-level directories
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # Add C++17 support and warnings
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic-errors")
+set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -pedantic-errors -fsignaling-nans")
 
 # Display compiler information
 message(STATUS "CMAKE_CXX_COMPILER      : " ${CMAKE_CXX_COMPILER} )

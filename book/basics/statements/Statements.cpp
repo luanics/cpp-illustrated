@@ -23,22 +23,30 @@ int main() {
 	luanics::utility::Herald herald{"Statements"};
 
 	//*********************************************************
-	// Expression Statements
+	// std::cout
+	//*********************************************************
+
+	std::cout << "Hi";
+	std::cout << "Hi" << "gh";
+	std::cout << "Hi" << '\n' << "friend" << std::endl;
+
+	//*********************************************************
+	// Expression statements
 	//*********************************************************
 
 	int health, vitality;
 	health = 9;
-	vitality = (health = 2 + 2);  	// OK - "health=2+2" is an expression
+	vitality = (health = 2 + 2);  // OK - "health=2+2" is an expression
 //	vitality = (health = 2 + 2;); // ERROR - "health=2+2;" is a statement
 
-	int wisdom = 12;    // "=" is initialization since wisdom is being defined
-	wisdom = 13;        // "=" is assignment since wisdom already defined
+	int wisdom = 12;    // "=" is initialization - wisdom being defined
+	wisdom = 13;        // "=" is assignment - wisdom already defined
 	if (wisdom == 18) { // "==" is comparison
 		std::cout << "sage" << std::endl;
 	}
 
 	//*********************************************************
-	// Declaration Statements
+	// Declaration statements
 	//*********************************************************
 
 	int gold;          // Declare a variable named "gold" of type "int"
@@ -49,15 +57,32 @@ int main() {
 	int score();       // Declare a function named "score" that returns int
 
 	//*********************************************************
-	// Variable Declarations
+	// Variable declarations
 	//*********************************************************
+
+	{
+		bool isMagical = true;
+		char glyph = 'a';
+		int power = 100;
+		float multiplier = 1.45;
+		std::string battleCry = "Attack!";
+	}
 
 	int reputation;          // Variable definition with no initializer
 	float multiplier = 1.45; // Variable definition with "=" initializer
 	extern int roll;         // Variable pure-declaration
 
 	//*********************************************************
-	// Compound Statement
+	// Alias declarations
+	//*********************************************************
+
+	using Price = int;
+	using Quantity = int;
+	using Purchase = std::pair<Price, Quantity>;
+	std::vector<Purchase> purchasesMadeBy(std::string const & person);
+
+	//*********************************************************
+	// Compound statement
 	//*********************************************************
 
 	bool isAttacked = true;
@@ -73,7 +98,7 @@ int main() {
 	}                       //               ment
 
 	//*********************************************************
-	// Control Flow Statements
+	// Control flow statements
 	//*********************************************************
 
 	bool isQuestSuccessful = false;
@@ -85,9 +110,18 @@ int main() {
 		reputation -= 1000;
 	}
 
-	std::vector<std::string> languages = {"Elvish", "Dwarvish", "Common"};
-	for (size_t i = 0; i < 3; ++i) {
-		std::cout << "Do you speak " << languages[i] << "?" << std::endl;
+	{
+		std::vector<std::string> languages = {"Elvish", "Klingon", "Dothraki"};
+		for (size_t i = 0; i < 3; ++i) {
+			std::cout << "Parlez-vous " << languages[i] << "?" << std::endl;
+		}
+	}
+
+	{
+		std::vector<std::string> languages = {"Elvish", "Klingon", "Dothraki"};
+		for (auto const & language: languages) {
+			std::cout << "Parlez-vous " << language << "?";
+		}
 	}
 
 	//*********************************************************
