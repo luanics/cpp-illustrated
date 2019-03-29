@@ -16,6 +16,7 @@
 #include "luanics/testing/core/Installer.hpp"
 #include "luanics/testing/core/Leaf.hpp"
 #include "luanics/testing/core/Reporter.hpp"
+#include "luanics/testing/unit/StructuralMacros.hpp"
 
 #define LUANICS_ADD_TUTORIAL(tutorialName) \
 	luanics::testing::core::Composite tutorial{#tutorialName};
@@ -27,8 +28,6 @@
 #define LUANICS_ADD_CHAPTER(partName, chapterName, isEnabled) \
 	extern luanics::testing::core::Composite luanics##Chapter##chapterName##Instance; \
 	luanics::testing::core::Installer chapter##chapterName##Installer{part##partName, luanics##Chapter##chapterName##Instance};
-
-#define LUANICS_TEST_SET_INSTANCE_EXTERNAL(name) luanicsTestSetInstance##name
 
 #define LUANICS_ADD_PROJECT(partName, projectNameSpace, projectName, isEnabled) \
 	namespace luanics { \

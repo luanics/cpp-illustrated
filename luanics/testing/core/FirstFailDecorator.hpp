@@ -7,16 +7,16 @@ namespace luanics::testing::core {
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 ///
-/// @class FirstFailFilter
+/// @class FirstFailDecorator
 ///
 /// @brief AugmentedReporterDecorator that stops reporting after the
 ///   first FAIL or ERROR Outcome.
 ///
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-class FirstFailFilter : public AugmentedReporterDecorator {
+class FirstFailDecorator : public AugmentedReporterDecorator {
 public:
-	FirstFailFilter(AugmentedReporter * filtered);
+	FirstFailDecorator(AugmentedReporter * decorated);
 
 	virtual bool startReportOn(
 		Component const & component,

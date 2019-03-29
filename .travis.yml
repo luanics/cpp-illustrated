@@ -11,8 +11,8 @@ addons:
 
 matrix:
   include:
-  - env: BUILD_TYPE=Debug 
-  - env: BUILD_TYPE=Release
+  - env: BUILD_TYPE=Debug BUILD_POSTFIX=d
+  - env: BUILD_TYPE=Release BUILD_POSTFIX=r
          
 script:
 - export CC=gcc-7
@@ -22,4 +22,6 @@ script:
 - mkdir ${BUILD_TYPE}
 - cd ${BUILD_TYPE}
 - cmake ../.. -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-- make all 
+- make all
+- cd ../../bin
+- ./luanics_test_${BUILD_POSTFIX}

@@ -1,4 +1,4 @@
-#include "luanics/testing/core/FirstFailFilter.hpp"
+#include "luanics/testing/core/FirstFailDecorator.hpp"
 
 namespace luanics::testing::core {
 
@@ -10,12 +10,12 @@ bool isFail(Outcome const & outcome) {
 
 }
 
-FirstFailFilter::FirstFailFilter(AugmentedReporter * filtered) :
-	AugmentedReporterDecorator{filtered},
+FirstFailDecorator::FirstFailDecorator(AugmentedReporter * decorated) :
+	AugmentedReporterDecorator{decorated},
 	_hasFailed{false}
 {}
 
-bool FirstFailFilter::startReportOn(
+bool FirstFailDecorator::startReportOn(
 	Component const & component,
 	unsigned const depth
 ) {
@@ -25,7 +25,7 @@ bool FirstFailFilter::startReportOn(
 	return AugmentedReporterDecorator::startReportOn(component, depth);
 }
 
-void FirstFailFilter::finishReportOn(
+void FirstFailDecorator::finishReportOn(
 	Component const & component,
 	unsigned const depth,
 	Outcome const outcome

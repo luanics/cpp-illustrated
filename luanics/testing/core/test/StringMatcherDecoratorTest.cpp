@@ -1,12 +1,12 @@
+#include "../StringMatcherDecorator.hpp"
 #include "luanics/testing/core/test/DummyComponent.hpp"
 #include "luanics/testing/core/test/SpyAugmentedReporter.hpp"
 #include "luanics/string/EnumeratedMatcher.hpp"
 #include "luanics/testing/Unit.hpp"
-#include "luanics/testing/core/StringMatcherFilter.hpp"
 
 namespace luanics::testing::core {
 
-BEGIN_TEST_SET(StringMatcherFilter)
+BEGIN_TEST_SET(StringMatcherDecorator_Tutorial)
 
 enum Level {
 	TEST_SUITE = 0,
@@ -17,11 +17,11 @@ enum Level {
 TEST(All) {
 	SpyAugmentedReporter reporter{};
 
-	StringMatcherFilter::MatchersByDepth matchers;
+	StringMatcherDecorator::MatchersByDepth matchers;
 	matchers.emplace(1, std::make_unique<string::EnumeratedMatcher>(std::vector<std::string>{"Cat", "Dog"}));
 	matchers.emplace(2, std::make_unique<string::EnumeratedMatcher>(std::vector<std::string>{"Black", "White"}));
 
-	StringMatcherFilter filter{&reporter, std::move(matchers)};
+	StringMatcherDecorator filter{&reporter, std::move(matchers)};
 
 	EXPECT_EQ(0, reporter.startReportCalls().size());
 	filter.startReportOn(DummyComponent{"Suite"}, TEST_SUITE);
@@ -55,6 +55,6 @@ TEST(All) {
 	EXPECT_EQ(2, reporter.finishReportCalls().size());
 }
 
-END_TEST_SET(Filter)
+END_TEST_SET(StringMatcherDecorator_Tutorial)
 
 } // namespace luanics::testing::unit

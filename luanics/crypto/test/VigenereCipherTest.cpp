@@ -3,7 +3,7 @@
 
 namespace luanics::crypto {
 
-BEGIN_TEST_SET(VigenereCipher)
+BEGIN_TEST_SET(VigenereCipher_Tutorial)
 
 TEST(All) {
 	// Example borrowed from http://en.wikipedia.org/wiki/Classical_cipher#Substitution_ciphers
@@ -14,6 +14,6 @@ TEST(All) {
 	EXPECT_EQ(plaintext, cipher.decrypt(ciphertext));
 }
 
-END_TEST_SET(VigenereCipher)
+END_TEST_SET(VigenereCipher_Tutorial)
 
 } // namespace luanics::crypto

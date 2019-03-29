@@ -1,4 +1,4 @@
-#include "luanics/testing/core/FirstFailFilter.hpp"
+#include "luanics/testing/core/FirstFailDecorator.hpp"
 #include "luanics/testing/core/IndentingReporter.hpp"
 #include "luanics/testing/core/ReporterAugmenter.hpp"
 #include "luanics/testing/Tutorial.hpp"
@@ -48,6 +48,7 @@ ADD_PART(NotSoBasics, true)
 ADD_CHAPTER(NotSoBasics, Tools, true)
 ADD_CHAPTER(NotSoBasics, TypeDeduction, true)
 
+ADD_PROJECT(NotSoBasics, testing::core, StringMatcherDecorator_Tutorial, true)
 ////ADD_PROJECT(Basics, graphics, Brush, true)
 //
 //ADD_PROJECT(Basics, container, Ring1, true)
@@ -86,7 +87,7 @@ int main(int argc, char * argv[]) {
 
 	luanics::utility::streams::setIsUsingAnsiCodes(isUsingColor);
 	luanics::testing::core::IndentingReporter unfiltered(&cout, isShowingHints);
-	luanics::testing::core::FirstFailFilter filtered(&unfiltered);
+	luanics::testing::core::FirstFailDecorator filtered(&unfiltered);
 	using luanics::testing::core::AugmentedReporter;
 	AugmentedReporter * reporter = isUsingFirstFail ? static_cast<AugmentedReporter*>(&filtered) : static_cast<AugmentedReporter*>(&unfiltered);
 	luanics::testing::core::ReporterAugmenter augmenter(reporter);

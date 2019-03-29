@@ -19,7 +19,7 @@ list(APPEND TutorialSources more_basics/Types.cpp)
 list(APPEND TutorialSources not_so_basics/Tools.cpp)
 list(APPEND TutorialSources not_so_basics/TypeDeduction.cpp)
 
-#list(APPEND TutorialSources ../luanics/container/test/Ring1Test.cpp)
+list(APPEND TutorialSources ../luanics/testing/core/test/StringMatcherDecoratorTest.cpp)
 
 #list(APPEND TutorialSources ../luanics/graphics/test/BrushTest.cpp)
 #list(APPEND TutorialSources ../luanics/graphics/test/DeltaTest.cpp)

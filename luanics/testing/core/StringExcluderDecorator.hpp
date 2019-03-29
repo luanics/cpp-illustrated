@@ -1,36 +1,37 @@
 #pragma once
 
-#include "luanics/string/Matcher.hpp"
 #include "luanics/testing/core/AugmentedReporterDecorator.hpp"
-
-#include <memory>
-#include <unordered_map>
 
 namespace luanics::testing::core {
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 ///
-/// @class StringMatcherFilter
+/// @class StringExcluderDecorator
 ///
-/// @brief AugmentedReporterDecorator that only reports on Components with matching name().
+/// @brief Excludes any Components with target string in their name().
 ///
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-class StringMatcherFilter : public AugmentedReporterDecorator {
+class StringExcluderDecorator : public AugmentedReporterDecorator {
 public:
-	using MatchersByDepth = std::unordered_map<
-		unsigned,
-		std::unique_ptr<string::Matcher>
-	>;
-
-	StringMatcherFilter(
+	StringExcluderDecorator(
 		AugmentedReporter * filtered,
-		MatchersByDepth matchers
+		std::string target
 	);
 
+	virtual bool startReportOn(
+		Component const & component,
+		unsigned const depth
+	) final;
+	virtual void finishReportOn(
+		Component const & component,
+		unsigned const depth,
+		Outcome const outcome
+	) final;
+
 private:
-	MatchersByDepth _matchers;
+	std::string _target;
 };
 
 } // namespace luanics::testing::core
