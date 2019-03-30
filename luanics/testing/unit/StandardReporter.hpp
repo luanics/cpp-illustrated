@@ -46,6 +46,9 @@ public:
 	virtual void report(core::Log const & log) override final;
 	virtual void report(core::Result const & result) override final;
 
+	size_t numTestsPassed() const;
+	size_t numTestsFailed() const;
+
 private:
 	bool startTestSuite();
 	void finishTestSuite(core::Outcome const outcome);
@@ -53,9 +56,6 @@ private:
 	void finishTestSet(std::string const & name, core::Outcome const outcome);
 	bool startTest(std::string const & name);
 	void finishTest(std::string const & name, core::Outcome const outcome);
-
-	size_t numTestsPassed() const;
-	size_t numTestsFailed() const;
 
 	void writeFileLineIdentifier(char const * const filePath, int const line);
 

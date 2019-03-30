@@ -15,5 +15,6 @@ int main() {
 	luanics::testing::core::ReporterAugmenter augmenter{&filter};
 	luanics::testing::unit::suiteInstance().run(augmenter);
 
-	return 0;
+	auto result = reporter.numTestsFailed() == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+	return result;
 }
