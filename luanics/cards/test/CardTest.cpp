@@ -8,7 +8,7 @@ BEGIN_TEST_SET(Card)
 
 TEST(DefaultConstruction) {
 	Card aceOfSpades;
-	EXPECT_NE(Rank::ACE, aceOfSpades.rank());
+	EXPECT_EQ(Rank::ACE, aceOfSpades.rank());
 	EXPECT_EQ(Suit::SPADES, aceOfSpades.suit());
 }
 
