@@ -17,13 +17,9 @@ BEGIN_CHAPTER(Objects)
 // * A view is a way of referring to an valuable. A view can be named or unnamed, and has an associated type.
 // * Testing objects for equality compares values. Testing objects for identity compares locations.
 
-SECTION(Basics) {
-
-}
-
 SECTION(References) {
-	// * At definition, object variables bind a name to a new object,
-	//    while reference variables bind a name to an existing object.
+// * At definition, object variables bind a name to a new object,
+//    while reference variables bind a name to an existing object.
 
 	int a = 1;
 	EXPECT_EQ(1, a);
@@ -43,13 +39,13 @@ SECTION(Identity) {
 	// Objects are "equal" if they hold the same value.
 	// Make these two variables equal:
 	int a = 4;
-	int b = FIX(RIGHT(4)WRONG(5));
+	int b = FIX(5);
 	EXPECT_EQ(a, b);
 
 	// Objects are "identical" if they have the same address
 	// Make these two variables identical
 	int c = 5;
-	int FIX(RIGHT(&d = c)WRONG(d = 5));
+	int FIX(d = 5);
 	EXPECT_EQ(&c, &d);
 }
 

@@ -6,6 +6,8 @@ list(APPEND TutorialSources basics/Variables.cpp)
 list(APPEND TutorialSources basics/Building.cpp)
 list(APPEND TutorialSources basics/Directives.cpp)
 list(APPEND TutorialSources basics/Projects.cpp)
+list(APPEND TutorialSources basics/Objects.cpp)
+list(APPEND TutorialSources basics/References.cpp)
 
 list(APPEND TutorialSources more_basics/ArithmeticTypes.cpp)
 list(APPEND TutorialSources more_basics/Functions.cpp)

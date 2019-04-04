@@ -33,6 +33,8 @@ ADD_CHAPTER(Basics, Variables, true)
 ADD_CHAPTER(Basics, Building, true)
 ADD_CHAPTER(Basics, Directives, true)
 ADD_CHAPTER(Basics, Projects, true)
+ADD_CHAPTER(Basics, Objects, true)
+ADD_CHAPTER(Basics, References, true)
 
 ADD_PART(MoreBasics, true)
 ADD_CHAPTER(MoreBasics, Types, true)
