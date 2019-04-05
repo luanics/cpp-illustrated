@@ -16,6 +16,11 @@ list(APPEND LuanicsLibSources crypto/Histogram.cpp)
 list(APPEND LuanicsLibSources crypto/RobustCaesarCipher.cpp)
 list(APPEND LuanicsLibSources crypto/VigenereCipher.cpp)
 
+list(APPEND LuanicsLibSources grid/DynamicGrid.cpp)
+list(APPEND LuanicsLibSources grid/FlippedGrid.cpp)
+list(APPEND LuanicsLibSources grid/Grid.cpp)
+list(APPEND LuanicsLibSources grid/SubGrid.cpp)
+
 list(APPEND LuanicsLibSources logging/Level.cpp)
 list(APPEND LuanicsLibSources logging/Logger.cpp)
 list(APPEND LuanicsLibSources logging/SimpleSink.cpp)
@@ -62,6 +67,10 @@ list(APPEND LuanicsTestSources cards/test/SuitTest.cpp)
 list(APPEND LuanicsTestSources crypto/test/CaesarCipherTest.cpp)
 list(APPEND LuanicsTestSources crypto/test/HelpersTest.cpp)
 list(APPEND LuanicsTestSources crypto/test/VigenereCipherTest.cpp)
+
+list(APPEND LuanicsTestSources grid/test/DynamicGridTest.cpp)
+list(APPEND LuanicsTestSources grid/test/FlippedGridTest.cpp)
+list(APPEND LuanicsTestSources grid/test/SubGridTest.cpp)
 
 list(APPEND LuanicsTestSources logging/test/ContractTest.cpp)
 list(APPEND LuanicsTestSources logging/test/SimpleSinkTest.cpp)
