@@ -96,4 +96,12 @@ SECTION(IntegralTypes) {
 	EXPECT_TRUE(sizeof(long long int) == FIX(0));
 }
 
+SECTION(Aliases) {
+
+}
+
+SECTION(Literals) {
+
+}
+
 END_CHAPTER(IntegralTypes)

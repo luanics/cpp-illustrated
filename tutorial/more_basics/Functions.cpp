@@ -45,7 +45,7 @@ SECTION(Basics) {
 	// Change the signature of a (above) so that it takes a single int and returns a double.
 	EXPECT_TRUE((std::is_invocable_r_v<double, decltype(a), int>));
 	// Change the signature of b (above) so that it takes no arguments and returns void
-	EXPECT_TRUE((std::is_invocable_r_v<void, decltype(b), void>));
+	EXPECT_TRUE((std::is_invocable_r_v<void, decltype(b)>));
 }
 
 FIX(int c(int & value) {value *= 2; return value;})
@@ -93,7 +93,7 @@ SECTION(DefaultArguments) {
 
 	// Modify manifesto() so that it takes a default argument of "a rock" (or another spirit animal of your choice)
 	EXPECT_TRUE((std::is_invocable_r_v<std::string, decltype(manifesto), std::string>));
-	EXPECT_TRUE((std::is_invocable_r_v<std::string, decltype(manifesto), void>));
+	EXPECT_TRUE((std::is_invocable_r_v<std::string, decltype(manifesto)>));
 }
 
 SECTION(LocalVariables) {

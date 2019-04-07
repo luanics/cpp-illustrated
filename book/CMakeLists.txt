@@ -25,6 +25,7 @@ create_executable(preprocessor basics/Preprocessor.cpp)
 create_executable(directives basics/Directives.cpp)
 create_executable(variables basics/Variables.cpp)
 create_executable(objects basics/Objects.cpp)
+create_executable(grid basics/Grid.cpp)
 
 # Metaprogramming
 create_executable(policies metaprogramming/Policies.cpp)

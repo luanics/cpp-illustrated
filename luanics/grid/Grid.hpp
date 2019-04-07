@@ -50,9 +50,15 @@ public:
 	//////////////////////////////////////////////////////////////////
 	//@{
 	/// @pre x < width and y < height
-	virtual ValueType & operator()(unsigned const x, unsigned const y) = 0;
+	virtual ValueType & operator()(
+		unsigned const x,
+		unsigned const y
+	) = 0;
 	/// @pre x < width and y < height
-	virtual ValueType const & operator()(unsigned const x, unsigned const y) const = 0;
+	virtual ValueType const & operator()(
+		unsigned const x,
+		unsigned const y
+	) const = 0;
 	//@}
 
 	//////////////////////////////////////////////////////////////////

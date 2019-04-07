@@ -21,7 +21,7 @@ public:
 	/// @name Management
 	//////////////////////////////////////////////////////////////////
 	//@{
-	DynamicGrid();
+	DynamicGrid(); ///< 0 by 0 grid
 	DynamicGrid(unsigned const width, unsigned const height);
 	DynamicGrid(DynamicGrid const & other) = default;
 	DynamicGrid & operator=(DynamicGrid const & other) = default;
